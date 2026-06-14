@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mateo &amp; Julieth · 3 de Octubre de 2026</title>
+  <meta name="description" content="Nos casamos. Acompáñanos el 3 de octubre de 2026 en el Retiro Magnolio, Bogotá." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Tangerine:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/styles.css" />
+</head>
+<body>
+  <!-- Navegación -->
+  <header class="nav" id="nav">
+    <nav class="nav-inner">
+      <ul class="nav-left">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#historia">Historia</a></li>
+      </ul>
+      <a href="#inicio" class="monogram" aria-label="Mateo y Julieth">M<span>&amp;</span>J</a>
+      <ul class="nav-right">
+        <li><a href="#lugar">Lugar</a></li>
+        <li><a href="#cronograma">Cronograma</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+      <div class="hero-media">
+        <img src="/images/hero.jpg" alt="Sendero entre el bosque" />
+        <canvas id="hero-canvas" aria-hidden="true"></canvas>
+        <div class="hero-scrim"></div>
+      </div>
+      <div class="hero-content">
+        <p class="kicker on-dark">Acompáñanos en la boda de</p>
+        <h1 class="script-display">Mateo <span class="amp">&amp;</span> Julieth</h1>
+        <span class="rule on-dark"></span>
+        <p class="hero-meta">Sábado · 3 de Octubre · 2026</p>
+      </div>
+      <a class="scroll-cue" href="#fecha" aria-label="Bajar">
+        <span></span>
+      </a>
+    </section>
+
+    <!-- FECHA + CUENTA REGRESIVA -->
+    <section class="date-band" id="fecha">
+      <div class="wrap reveal">
+        <p class="date-display">3 de Octubre, 2026</p>
+        <p class="place-line">Bogotá, Colombia</p>
+        <div class="count" id="countdown">
+          <div><b data-unit="dias">--</b><i>Días</i></div>
+          <span class="count-sep">·</span>
+          <div><b data-unit="horas">--</b><i>Horas</i></div>
+          <span class="count-sep">·</span>
+          <div><b data-unit="minutos">--</b><i>Min</i></div>
+          <span class="count-sep">·</span>
+          <div><b data-unit="segundos">--</b><i>Seg</i></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FRANJA DE DETALLE -->
+    <section class="detail-band" aria-hidden="true">
+      <img src="/images/detalle.jpg" alt="" />
+      <div class="detail-band-scrim"></div>
+    </section>
+
+    <!-- NUESTRA HISTORIA -->
+    <section class="story" id="historia">
+      <div class="story-grid wrap reveal">
+        <figure class="story-figure">
+          <img src="/images/historia.jpg" alt="Mateo y Julieth" />
+        </figure>
+        <div class="story-text">
+          <h2 class="serif-title">Mateo &amp; Julieth</h2>
+          <p class="script-sub">nuestra historia</p>
+          <p>Lo que empezó como una conversación que no queríamos terminar se convirtió, sin darnos cuenta, en la costumbre más bonita de nuestras vidas. Entre cafés a deshoras, viajes improvisados y mil planes cumplidos, entendimos que el lugar favorito de cada uno era, simplemente, el otro.</p>
+          <p>Hoy, rodeados de las montañas que tantas veces nos vieron soñar, queremos dar el siguiente paso. Y no hay nadie con quien quisiéramos celebrarlo más que contigo.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- EL LUGAR -->
+    <section class="venue" id="lugar">
+      <div class="venue-media">
+        <img src="/images/retiro-magnolio.jpeg" alt="Retiro Magnolio, jardines y salones para eventos en Bogotá" />
+        <div class="venue-scrim"></div>
+      </div>
+      <div class="venue-content reveal">
+        <p class="kicker on-dark">Donde todo sucede</p>
+        <h2 class="serif-title on-dark">Retiro Magnolio</h2>
+        <p class="venue-addr on-dark">Autopista Norte Calle 212, Km 13<br />Vía Arrayanes, Bogotá – Colombia</p>
+        <a class="btn-outline on-dark" href="https://www.google.com/maps/search/?api=1&query=Autopista+Norte+Km+13+Via+Arrayanes+Bogota" target="_blank" rel="noopener">Cómo llegar</a>
+      </div>
+    </section>
+
+    <!-- DETALLES -->
+    <section class="details" id="detalles">
+      <div class="wrap reveal">
+        <h2 class="serif-title centered">El gran día</h2>
+        <p class="script-sub centered">los detalles</p>
+        <dl class="detail-list">
+          <div>
+            <dt>Ceremonia religiosa</dt>
+            <dd>11:00 de la mañana</dd>
+            <dd class="muted">Iglesia Dios Ministerial de Jesucristo Internacional</dd>
+            <dd class="muted">Sede La Colina</dd>
+          </div>
+          <div>
+            <dt>Reunión y celebración</dt>
+            <dd>5:00 de la tarde</dd>
+            <dd class="muted">Retiro Magnolio · Vía Arrayanes, Bogotá</dd>
+          </div>
+          <div>
+            <dt>Código de vestir</dt>
+            <dd>Formal de jardín</dd>
+            <dd class="muted">Te pedimos reservar el blanco para la novia</dd>
+          </div>
+          <div>
+            <dt>Clima</dt>
+            <dd>Montaña, 14&nbsp;°C aprox.</dd>
+            <dd class="muted">Trae un abrigo ligero para la noche</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- CRONOGRAMA -->
+    <section class="schedule" id="cronograma">
+      <div class="schedule-media">
+        <img src="/images/schedule-dark.jpg" alt="Bosque al anochecer" />
+        <div class="schedule-scrim"></div>
+      </div>
+      <div class="schedule-content reveal">
+        <h2 class="serif-title on-dark">Cronograma del día</h2>
+        <ol class="timeline">
+          <li><span class="t-time">11:00 am</span><span class="t-label">Ceremonia · Iglesia de Dios Ministerial de Jesucristo Internacional</span></li>
+          <li><span class="t-time">5:00 pm</span><span class="t-label">Bienvenida · Retiro Magnolio</span></li>
+          <li><span class="t-time">6:00 pm</span><span class="t-label">Cóctel &amp; sesión de fotos</span></li>
+          <li><span class="t-time">7:30 pm</span><span class="t-label">Cena</span></li>
+          <li><span class="t-time">9:00 pm</span><span class="t-label">¡A bailar!</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- RSVP -->
+    <section class="rsvp" id="rsvp">
+      <div class="wrap reveal">
+        <h2 class="serif-title centered">Confirma tu asistencia</h2>
+        <p class="script-sub centered">te esperamos</p>
+        <p class="rsvp-note">Por favor confírmanos antes del <strong>15 de septiembre de 2026</strong>.</p>
+        <form id="rsvp-form" class="rsvp-form" novalidate>
+          <div class="field">
+            <label>Nombre</label>
+            <div id="guests" class="guests"></div>
+            <button type="button" class="btn-add" id="add-guest">+ Agregar otra persona</button>
+            <p class="field-hint">
+              Solo las personas registradas en la lista de invitados podrán asistir.
+              Si no encuentras tu nombre, escríbenos.
+            </p>
+          </div>
+          <label class="field">
+            <span>Teléfono</span>
+            <input type="tel" name="telefono" inputmode="tel" required autocomplete="tel"
+                   placeholder="+57 300 000 0000" />
+          </label>
+          <label class="field">
+            <span>Confirmar asistencia</span>
+            <select name="asistencia" required>
+              <option value="">Selecciona</option>
+              <option value="si">Sí, allí estaré</option>
+              <option value="no">No podré asistir</option>
+            </select>
+          </label>
+          <button type="submit" class="btn-solid">Enviar confirmación</button>
+          <p class="form-note" id="form-note" role="status"></p>
+        </form>
+
+        <template id="guest-tpl">
+          <div class="guest-entry">
+            <div class="guest-row">
+              <div class="combobox" data-combobox>
+                <input type="text" role="combobox" aria-expanded="false"
+                       aria-autocomplete="list" autocomplete="off"
+                       placeholder="Busca o escribe el nombre" />
+                <ul class="combobox-list" role="listbox" aria-label="Invitados" hidden></ul>
+              </div>
+              <button type="button" class="guest-remove" aria-label="Quitar persona" hidden>&times;</button>
+            </div>
+            <p class="guest-msg" role="status"></p>
+          </div>
+        </template>
+      </div>
+    </section>
+
+    <!-- FRANJA DE CIERRE -->
+    <section class="detail-band detail-band--tall" aria-hidden="true">
+      <img src="/images/cierre.jpg" alt="" />
+      <div class="detail-band-scrim"></div>
+    </section>
+
+    <footer class="footer">
+      <span class="rule"></span>
+      <p class="script-display footer-names">Mateo &amp; Julieth</p>
+      <p class="muted footer-tag">Con amor · La Calera, Bogotá · 2026</p>
+    </footer>
+  </main>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
