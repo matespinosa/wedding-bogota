@@ -348,40 +348,49 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 /* ---------- Cronograma ---------- */
 .schedule {
-  position: relative;
-  min-height: 94vh;
-  display: flex;
+  padding: clamp(5rem, 12vw, 9rem) 0;
+  background: var(--bg-2);
+}
+.schedule-grid {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: clamp(2rem, 6vw, 5rem);
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 6rem 1.5rem;
+}
+.schedule-figure {
+  aspect-ratio: 4 / 5;
   overflow: hidden;
+  box-shadow: 0 30px 60px -30px rgba(35, 43, 32, 0.5);
 }
-.schedule-media { position: absolute; inset: 0; z-index: 0; }
-.schedule-media img { filter: saturate(0.9) brightness(0.7); }
-.schedule-scrim {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 50% 50%, rgba(18, 24, 16, 0.4), rgba(18, 24, 16, 0.74));
+.schedule-figure img {
+  filter: saturate(0.96) brightness(0.96);
+  transition: transform 1.2s var(--ease);
 }
-.schedule-content { position: relative; z-index: var(--z-base); max-width: 560px; width: 100%; }
-.schedule-content .serif-title { margin-bottom: 2.6rem; }
+.schedule-figure:hover img { transform: scale(1.04); }
+.schedule-content {
+  max-width: 48ch;
+  width: 100%;
+}
+.schedule-content .serif-title { margin-bottom: 0.1rem; }
+.schedule-content .script-sub { margin-bottom: 2rem; }
 .timeline { list-style: none; display: flex; flex-direction: column; }
 .timeline li {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 5.8rem auto 1fr;
   align-items: center;
-  gap: 1.4rem;
-  padding: 1.15rem 0;
-  border-top: 1px solid rgba(243, 241, 232, 0.18);
+  gap: 1rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--line);
 }
-.timeline li:last-child { border-bottom: 1px solid rgba(243, 241, 232, 0.18); }
+.timeline li:last-child { border-bottom: 1px solid var(--line); }
 .t-time {
   grid-column: 1; grid-row: 1;
   font-family: var(--serif);
   font-style: italic;
-  font-size: 1.5rem;
-  color: var(--on-dark);
+  font-size: 1.35rem;
+  color: var(--ink);
   text-align: right;
+  white-space: nowrap;
 }
 .timeline li::before {
   content: "";
@@ -397,7 +406,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   text-transform: uppercase;
   letter-spacing: 0.16em;
   font-size: 0.82rem;
-  color: var(--on-dark-muted);
+  color: var(--muted);
   text-align: left;
 }
 
@@ -561,6 +570,31 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
 .btn-solid:hover { background: var(--green-deep); letter-spacing: 0.26em; }
 
+/* ---------- Botón para alternar entre propuestas ---------- */
+.proposal-ribbon {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: var(--z-nav);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  background: var(--green);
+  color: var(--on-dark);
+  font-family: var(--sans);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.62rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 14px 30px -16px rgba(35, 42, 34, 0.6);
+  opacity: 0.9;
+  transition: opacity 0.3s var(--ease), background 0.3s var(--ease);
+}
+.proposal-ribbon:hover { opacity: 1; background: var(--green-deep); }
+
 /* ---------- Footer ---------- */
 .footer {
   text-align: center;
@@ -593,6 +627,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .reveal, .reveal.is-hidden { opacity: 1; transform: none; transition: none; }
   .scroll-cue span { animation: none; }
   .story-figure img { transition: none; }
+  .schedule-figure img { transition: none; }
 }
 
 /* ---------- Responsive ---------- */
@@ -600,6 +635,9 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .story-grid { grid-template-columns: 1fr; gap: 2.2rem; }
   .story-figure { aspect-ratio: 16 / 11; }
   .story-text { max-width: none; }
+  .schedule-grid { grid-template-columns: 1fr; gap: 2.2rem; }
+  .schedule-figure { aspect-ratio: 16 / 11; }
+  .schedule-content { max-width: none; }
   .venue-content { margin-left: auto; margin-right: auto; text-align: center; max-width: 560px; }
   .venue-scrim { background: linear-gradient(180deg, rgba(20,26,18,0.45), rgba(20,26,18,0.7)); }
   /* Navegación: una sola fila centrada de enlaces; el monograma estorba aquí */
