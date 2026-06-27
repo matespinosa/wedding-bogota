@@ -303,7 +303,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   background: linear-gradient(180deg, rgba(20, 26, 18, 0.16), rgba(20, 26, 18, 0.04));
 }
 
-/* ---------- El gran día — lugares + detalles, limpio y sin imagen ---------- */
+/* ---------- El gran día — lugares + detalles, con foto por lugar ---------- */
 .gran-dia { padding: clamp(5rem, 12vw, 9rem) 0; }
 .gran-dia-head { text-align: center; margin-bottom: clamp(3rem, 7vw, 5rem); }
 .gran-dia-head .kicker { display: block; margin-bottom: 1.1rem; }
@@ -311,13 +311,37 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .gran-dia-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(2.4rem, 6vw, 5rem);
-  max-width: 920px;
+  gap: clamp(2.6rem, 6vw, 5rem);
+  max-width: 1000px;
   margin: 0 auto;
 }
-.gran-dia-place {
-  padding-top: 1.6rem;
-  border-top: 1px solid var(--line);
+.gran-dia-place { display: flex; flex-direction: column; }
+.gd-figure {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  margin-bottom: clamp(1.6rem, 3vw, 2.2rem);
+  box-shadow: 0 30px 60px -32px rgba(35, 43, 32, 0.5);
+}
+.gd-figure img {
+  /* Acabado vintage: descolorido tipo película, negros levantados y tono cálido */
+  filter: sepia(0.42) saturate(0.7) contrast(0.9) brightness(1.06) hue-rotate(-8deg);
+  transition: transform 1.2s var(--ease), filter 0.8s var(--ease);
+}
+.gd-figure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* velo cálido que desvanece los negros (aire de foto antigua) */
+  background:
+    linear-gradient(180deg, rgba(151, 120, 63, 0.16), rgba(146, 150, 138, 0.12)),
+    radial-gradient(125% 120% at 50% 30%, transparent 58%, rgba(60, 64, 47, 0.22) 100%);
+  mix-blend-mode: screen;
+}
+.gran-dia-place:hover .gd-figure img {
+  transform: scale(1.04);
+  filter: sepia(0.34) saturate(0.78) contrast(0.94) brightness(1.04) hue-rotate(-8deg);
 }
 .gd-time {
   font-family: var(--sans);
@@ -326,7 +350,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   letter-spacing: 0.2em;
   font-size: 0.72rem;
   color: var(--brass);
-  margin-bottom: 0.9rem;
+  margin-bottom: 0.8rem;
 }
 .gd-event {
   font-family: var(--serif);
@@ -338,7 +362,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   margin-bottom: 0.8rem;
 }
 .gd-place {
-  max-width: 30ch;
+  max-width: 32ch;
   font-size: 1.18rem;
   line-height: 1.5;
   color: var(--ink);
@@ -352,66 +376,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   color: var(--muted);
   margin: 0 0 1.7rem;
 }
-
-/* ---------- Cronograma — oscuro a sangre completa ---------- */
-.schedule-dark {
-  position: relative;
-  padding: clamp(5rem, 13vw, 9rem) 0;
-  overflow: hidden;
-}
-.schedule-dark-media { position: absolute; inset: 0; z-index: 0; }
-.schedule-dark-media img { filter: saturate(0.9) brightness(0.5); }
-.schedule-dark-scrim {
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(90deg, rgba(20, 26, 18, 0.62) 0%, rgba(20, 26, 18, 0.42) 45%, rgba(20, 26, 18, 0.72) 100%),
-    linear-gradient(180deg, rgba(20, 26, 18, 0.5), rgba(20, 26, 18, 0.66));
-}
-.schedule-dark-content {
-  position: relative;
-  z-index: var(--z-base);
-  display: flex;
-  justify-content: flex-end;
-}
-.schedule-dark-inner { width: min(46ch, 100%); }
-.schedule-dark-inner .kicker { display: block; margin-bottom: 1rem; }
-.schedule-dark-inner .serif-title { margin-bottom: 2rem; }
-.timeline { list-style: none; display: flex; flex-direction: column; }
-.timeline li {
-  display: grid;
-  grid-template-columns: 6.6rem auto 1fr;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.15rem 0;
-  border-top: 1px solid rgba(243, 241, 232, 0.22);
-}
-.timeline li:last-child { border-bottom: 1px solid rgba(243, 241, 232, 0.22); }
-.t-time {
-  grid-column: 1; grid-row: 1;
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.5rem;
-  color: var(--on-dark);
-  text-align: right;
-  white-space: nowrap;
-}
-.timeline li::before {
-  content: "";
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--brass);
-  grid-column: 2; grid-row: 1;
-}
-.t-label {
-  grid-column: 3; grid-row: 1;
-  font-family: var(--sans);
-  font-weight: 300;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-size: 0.82rem;
-  color: var(--on-dark-muted);
-  text-align: left;
-}
+.gd-place + .gd-addr { margin-top: 0.1rem; }
+.gran-dia-place .btn-outline { margin-top: auto; align-self: flex-start; }
 
 /* ---------- Código de vestir ---------- */
 .dress-code {
@@ -678,7 +644,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   html { scroll-behavior: auto; }
   .reveal, .reveal.is-hidden { opacity: 1; transform: none; transition: none; }
   .scroll-cue span { animation: none; }
-  .story-figure img { transition: none; }
+  .story-figure img,
+  .gd-figure img { transition: none; }
 }
 
 /* ---------- Responsive ---------- */
@@ -686,12 +653,10 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .story-grid { grid-template-columns: 1fr; gap: 2.2rem; }
   .story-figure { aspect-ratio: 16 / 11; }
   .story-text { max-width: none; }
-  .gran-dia-grid { grid-template-columns: 1fr; gap: 0; max-width: 520px; }
-  .gran-dia-place { padding-top: 1.6rem; }
-  .gran-dia-place + .gran-dia-place { margin-top: 2rem; }
+  .gran-dia-grid { grid-template-columns: 1fr; gap: clamp(2.6rem, 8vw, 3.4rem); max-width: 540px; }
+  .gd-figure { aspect-ratio: 16 / 10; }
   .gd-place { max-width: none; }
-  .schedule-dark-content { justify-content: flex-start; }
-  .schedule-dark-inner { width: 100%; }
+  .gran-dia-place .btn-outline { margin-top: 0.4rem; }
   .nav-inner { display: flex; justify-content: center; gap: 1.4rem; }
   .monogram { display: none; }
   .nav ul { gap: 1.4rem; }
@@ -704,10 +669,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .nav a { font-size: 0.62rem; letter-spacing: 0.16em; }
   .count { flex-wrap: wrap; justify-content: center; gap: 0.6rem 1rem; }
   .count-sep { display: none; }
-  .timeline li { grid-template-columns: auto 1fr; gap: 0.4rem 0.9rem; }
-  .timeline li::before { grid-column: 1; grid-row: 1; align-self: center; }
-  .t-time { grid-column: 2; grid-row: 1; text-align: left; }
-  .t-label { grid-column: 2; grid-row: 2; }
   .dress-grid { grid-template-columns: 1fr; gap: 1.6rem; max-width: 320px; }
   .dress-grid > div + div { border-left: 0; padding-top: 1.6rem; border-top: 1px solid var(--line); }
 }
