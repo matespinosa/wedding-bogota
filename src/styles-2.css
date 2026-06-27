@@ -341,20 +341,56 @@ p { max-width: 64ch; text-wrap: pretty; }
 }
 
 /* ======================================================
-   VENUE
+   LUGARES DEL GRAN DÍA
    ====================================================== */
 .venue { padding: clamp(4.5rem, 11vw, 8rem) 0; }
-.venue-grid {
-  display: grid;
-  grid-template-columns: 1fr 0.9fr;
-  gap: clamp(2rem, 6vw, 5rem);
-  align-items: center;
+.venue-heading { text-align: center; margin-bottom: clamp(2.5rem, 6vw, 4rem); }
+.venue-heading .label { display: block; margin-bottom: 1rem; }
+.venue-photo {
+  width: min(960px, 100%);
+  margin: 0 auto clamp(2.8rem, 7vw, 5rem);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
-.venue-photo { border-radius: var(--radius); overflow: hidden; }
-.venue-photo img { width: 100%; aspect-ratio: 5 / 4; object-fit: cover; }
-.venue-info .label { margin-bottom: 1.2rem; }
-.venue-info .serif-title { margin-bottom: 1.1rem; }
-.venue-addr { color: var(--muted); font-size: 1.05rem; line-height: 1.8; margin-bottom: 1.9rem; }
+.venue-photo img { width: 100%; aspect-ratio: 16 / 7; object-fit: cover; }
+.venue-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2.5rem, 7vw, 6rem);
+  max-width: 960px;
+  margin-inline: auto;
+}
+.venue-place { padding-top: 1.25rem; border-top: 1px solid var(--line-2); }
+.venue-time {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.venue-place h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(1.8rem, 3.4vw, 2.7rem);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.venue-name {
+  max-width: 42ch;
+  margin-top: 1rem;
+  font-family: var(--ui);
+  font-weight: 600;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+.venue-place address {
+  min-height: 4rem;
+  margin: 0.65rem 0 1.7rem;
+  color: var(--muted);
+  font-family: var(--ui);
+  font-style: normal;
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
 
 /* ======================================================
    CRONOGRAMA — timeline editorial monocromo
@@ -372,6 +408,10 @@ p { max-width: 64ch; text-wrap: pretty; }
   border-top: 1px solid var(--line);
 }
 .timeline li:last-child { border-bottom: 1px solid var(--line); }
+.timeline li.timeline-gap {
+  margin-top: 1.8rem;
+  border-top-color: var(--ink);
+}
 .t-time {
   font-family: var(--display);
   font-weight: 500;
@@ -380,31 +420,60 @@ p { max-width: 64ch; text-wrap: pretty; }
 }
 .t-label { font-family: var(--ui); color: var(--ink-2); font-size: 1rem; line-height: 1.5; }
 
-@media (max-width: 540px) {
-  .timeline li { grid-template-columns: 1fr; gap: 0.3rem; }
+/* ======================================================
+   CÓDIGO DE VESTIR — composición tipográfica
+   ====================================================== */
+.dress-code {
+  padding: clamp(5rem, 12vw, 9rem) 0;
+  border-block: 1px solid var(--line-2);
+  text-align: center;
+}
+.dress-heading .label { display: block; margin-bottom: 1rem; }
+.dress-heading .serif-title { margin-bottom: 0.8rem; }
+.dress-level {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(2.4rem, 6vw, 4.8rem);
+  line-height: 1;
+  color: var(--ink-2);
+}
+.dress-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 820px;
+  margin: clamp(3rem, 7vw, 5rem) auto 0;
+  border-block: 1px solid var(--line-2);
+}
+.dress-grid > div { padding: clamp(2rem, 5vw, 3.5rem); }
+.dress-grid > div + div { border-left: 1px solid var(--line-2); }
+.dress-grid dt {
+  margin-bottom: 0.7rem;
+  font-family: var(--ui);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+.dress-grid dd {
+  font-family: var(--display);
+  font-size: clamp(1.7rem, 3.5vw, 2.5rem);
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.dress-reserved {
+  margin: clamp(2rem, 5vw, 3rem) auto 0;
+  font-family: var(--ui);
+  font-size: 0.92rem;
+  color: var(--muted);
+  text-wrap: balance;
 }
 
-/* ======================================================
-   DETALLES
-   ====================================================== */
-.details { padding: clamp(4.5rem, 11vw, 8rem) 0; text-align: center; }
-.details .label { display: block; margin-bottom: 1rem; }
-.details .serif-title { margin-bottom: clamp(2.5rem, 6vw, 4rem); }
-.detail-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: clamp(2rem, 5vw, 3.5rem);
-  max-width: 940px;
-  margin-inline: auto;
+@media (max-width: 540px) {
+  .timeline li { grid-template-columns: 1fr; gap: 0.3rem; }
+  .dress-grid { grid-template-columns: 1fr; }
+  .dress-grid > div + div { border-left: 0; border-top: 1px solid var(--line-2); }
 }
-.detail-list dt {
-  font-family: var(--display);
-  font-weight: 500;
-  font-size: 1.15rem;
-  margin-bottom: 0.7rem;
-}
-.detail-list dd { font-family: var(--ui); font-size: 1rem; color: var(--ink); }
-.detail-list dd.muted { font-size: 0.9rem; color: var(--muted); line-height: 1.55; margin-top: 0.2rem; }
 
 /* ======================================================
    BANDA / FRANJA DE CIERRE
@@ -580,6 +649,7 @@ p { max-width: 64ch; text-wrap: pretty; }
 @media (max-width: 760px) {
   .intro-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .intro-photo { order: -1; max-width: 420px; margin-inline: auto; }
-  .venue-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .venue-photo { max-width: 480px; margin-inline: auto; }
+  .venue-photo img { aspect-ratio: 5 / 4; }
+  .venue-list { grid-template-columns: 1fr; gap: 2.5rem; }
+  .venue-place address { min-height: 0; }
 }

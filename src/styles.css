@@ -293,58 +293,60 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   min-height: 86vh;
   display: flex;
   align-items: center;
+  padding: clamp(6rem, 13vw, 9rem) 0;
   overflow: hidden;
 }
 .venue-media { position: absolute; inset: 0; z-index: 0; }
 .venue-media img { filter: saturate(0.95) brightness(0.88); }
 .venue-scrim {
   position: absolute; inset: 0;
-  background: linear-gradient(100deg, rgba(20, 26, 18, 0.72) 0%, rgba(20, 26, 18, 0.35) 45%, transparent 75%);
+  background: linear-gradient(180deg, rgba(20, 26, 18, 0.68), rgba(20, 26, 18, 0.76));
 }
 .venue-content {
   position: relative;
   z-index: var(--z-base);
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 0 1.6rem;
-  width: 100%;
-  max-width: 540px;
-  margin-left: max(1.6rem, calc(50vw - var(--maxw) / 2));
+  color: var(--on-dark);
 }
-.venue-content .kicker { margin-bottom: 1.2rem; }
-.venue-addr {
-  font-style: italic;
-  font-size: 1.3rem;
-  color: var(--on-dark-muted);
-  margin: 1rem 0 2rem;
-}
-
-/* ---------- Detalles ---------- */
-.details { padding: clamp(5rem, 12vw, 9rem) 0; }
-.details .serif-title { margin-bottom: 0.1rem; }
-.details .script-sub { margin-bottom: 3rem; }
-.detail-list {
+.venue-heading { text-align: center; margin-bottom: clamp(2.8rem, 6vw, 4.5rem); }
+.venue-heading .kicker { margin-bottom: 1.1rem; }
+.venue-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 2.6rem 3rem;
-  max-width: 860px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2rem, 7vw, 6rem);
+  max-width: 980px;
   margin: 0 auto;
 }
-.detail-list > div {
-  padding-top: 1.2rem;
-  border-top: 1px solid var(--line);
+.venue-place { padding-top: 1.4rem; border-top: 1px solid rgba(243, 241, 232, 0.48); }
+.venue-time {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.4rem;
+  color: var(--on-dark-muted);
+  margin-bottom: 0.45rem;
 }
-.detail-list dt {
-  font-family: var(--sans);
+.venue-place h3 {
+  font-family: var(--serif);
   font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  font-size: 0.7rem;
-  color: var(--brass);
-  margin-bottom: 0.7rem;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.05;
+  text-wrap: balance;
 }
-.detail-list dd { font-size: 1.32rem; line-height: 1.4; }
-.detail-list dd.muted { font-size: 1.05rem; margin-top: 0.2rem; }
+.venue-name {
+  max-width: 38ch;
+  margin-top: 1rem;
+  font-size: 1.12rem;
+  line-height: 1.55;
+  color: var(--on-dark);
+  text-wrap: pretty;
+}
+.venue-place address {
+  min-height: 4.1rem;
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--on-dark-muted);
+  margin: 0.75rem 0 1.7rem;
+}
 
 /* ---------- Cronograma ---------- */
 .schedule {
@@ -383,6 +385,10 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   border-top: 1px solid var(--line);
 }
 .timeline li:last-child { border-bottom: 1px solid var(--line); }
+.timeline li.timeline-gap {
+  margin-top: 1.5rem;
+  border-top-color: var(--brass);
+}
 .t-time {
   grid-column: 1; grid-row: 1;
   font-family: var(--serif);
@@ -408,6 +414,134 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   font-size: 0.82rem;
   color: var(--muted);
   text-align: left;
+}
+
+/* ---------- Código de vestir ---------- */
+.dress-code {
+  padding: clamp(5rem, 12vw, 9rem) 0;
+  background: var(--green-deep);
+  color: var(--on-dark);
+  text-align: center;
+}
+.dress-heading .script-sub { color: var(--brass-light); margin-bottom: 0.15rem; }
+.dress-heading .serif-title { color: var(--on-dark); }
+.dress-level {
+  width: fit-content;
+  margin: 1.5rem auto clamp(3rem, 7vw, 4.5rem);
+  padding: 0.45rem 1.5rem;
+  border: 1px solid rgba(243, 241, 232, 0.48);
+  border-radius: 999px;
+  font-family: var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 0.72rem;
+}
+.dress-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 760px;
+  margin: 0 auto;
+}
+.dress-grid > div { padding: 0.5rem clamp(1.5rem, 5vw, 4rem); }
+.dress-grid > div + div { border-left: 1px solid rgba(243, 241, 232, 0.28); }
+.dress-grid dt {
+  margin-bottom: 0.65rem;
+  font-family: var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.68rem;
+  color: var(--brass-light);
+}
+.dress-grid dd {
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 3.5vw, 2.5rem);
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.dress-reserved {
+  max-width: 540px;
+  margin: clamp(3rem, 7vw, 4.5rem) auto 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(243, 241, 232, 0.28);
+  color: var(--on-dark-muted);
+  font-style: italic;
+  text-wrap: balance;
+}
+
+/* ---------- Código de vestir ---------- */
+.dress-code {
+  padding: clamp(5rem, 12vw, 9rem) 0;
+  background: var(--bg-2);
+  text-align: center;
+}
+.dress-code .wrap { max-width: 720px; }
+.dress-illos {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4rem;
+  color: var(--green);
+  margin-bottom: 1.8rem;
+}
+.dress-illo {
+  width: clamp(54px, 6vw, 68px);
+  height: auto;
+  display: block;
+}
+.dress-illos-sep {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  color: var(--brass);
+  opacity: 0.6;
+  line-height: 1;
+  transform: translateY(-2px);
+}
+.dress-code .serif-title { margin-bottom: 0.1rem; }
+.dress-code .script-sub { margin-bottom: 1.6rem; }
+.dress-level {
+  width: fit-content;
+  margin: 0 auto clamp(2.8rem, 6vw, 4rem);
+  padding: 0.45rem 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 0.7rem;
+  color: var(--ink);
+}
+.dress-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 540px;
+  margin: 0 auto;
+}
+.dress-grid > div { padding: 0.4rem clamp(1.4rem, 4vw, 2.8rem); }
+.dress-grid > div + div { border-left: 1px solid var(--line); }
+.dress-grid dt {
+  margin-bottom: 0.7rem;
+  font-family: var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+.dress-grid dd {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.45rem, 3vw, 1.85rem);
+  line-height: 1.2;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.dress-reserved {
+  max-width: 460px;
+  margin: clamp(2.6rem, 6vw, 3.6rem) auto 0;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line);
+  font-style: italic;
+  color: var(--muted);
+  text-wrap: balance;
 }
 
 /* ---------- RSVP ---------- */
@@ -500,7 +634,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   overflow-y: auto;
   background: #fff;
   border: 1px solid var(--line);
-  border-radius: 3px;
+  border-radius: 2px;
   box-shadow: 0 18px 40px -22px rgba(35, 43, 32, 0.55);
 }
 .combobox-option {
@@ -638,8 +772,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .schedule-grid { grid-template-columns: 1fr; gap: 2.2rem; }
   .schedule-figure { aspect-ratio: 16 / 11; }
   .schedule-content { max-width: none; }
-  .venue-content { margin-left: auto; margin-right: auto; text-align: center; max-width: 560px; }
-  .venue-scrim { background: linear-gradient(180deg, rgba(20,26,18,0.45), rgba(20,26,18,0.7)); }
+  .venue-list { gap: 2.5rem; }
   /* Navegación: una sola fila centrada de enlaces; el monograma estorba aquí */
   .nav-inner { display: flex; justify-content: center; gap: 1.4rem; }
   .monogram { display: none; }
@@ -649,13 +782,21 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 @media (max-width: 620px) {
   body { font-size: 1.1rem; }
-  .nav ul { gap: 1.1rem; }
+  .nav-inner { gap: 0.75rem; padding-inline: 0.9rem; }
+  .nav ul { gap: 0.75rem; }
+  .nav-left li:nth-child(2) { display: none; }
   .nav a { font-size: 0.62rem; letter-spacing: 0.16em; }
   .count { flex-wrap: wrap; justify-content: center; gap: 0.6rem 1rem; }
   .count-sep { display: none; }
   .field-row { grid-template-columns: 1fr; }
+  .venue-list { grid-template-columns: 1fr; }
+  .venue-place address { min-height: 0; }
+  .dress-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .dress-grid > div + div { border-left: 0; padding-top: 2rem; border-top: 1px solid rgba(243, 241, 232, 0.28); }
   .timeline li { grid-template-columns: auto 1fr; gap: 0.4rem 0.9rem; text-align: left; }
   .timeline li::before { grid-column: 1; grid-row: 1; align-self: center; }
   .t-time { grid-column: 2; grid-row: 1; text-align: left; }
   .t-label { grid-column: 2; grid-row: 2; }
+  .dress-grid { grid-template-columns: 1fr; gap: 1.6rem; max-width: 320px; }
+  .dress-grid > div + div { border-left: 0; padding-top: 1.6rem; border-top: 1px solid var(--line); }
 }
