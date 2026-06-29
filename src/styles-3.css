@@ -297,7 +297,9 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   overflow: hidden;
 }
 .detail-band--tall { height: 70vh; min-height: 420px; }
-.detail-band img { filter: saturate(0.96) brightness(0.94); }
+/* Reencuadre: la foto es vertical y el recorte centrado cortaba la cara;
+   subimos el punto de enfoque para dar aire sobre las cabezas. */
+.detail-band img { filter: saturate(0.96) brightness(0.94); object-position: center 28%; }
 .detail-band-scrim {
   position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(20, 26, 18, 0.16), rgba(20, 26, 18, 0.04));
@@ -403,22 +405,26 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .dress-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  max-width: 540px;
+  gap: clamp(1.6rem, 5vw, 3.5rem);
+  max-width: 660px;
   margin: 0 auto;
+  align-items: end;
 }
-.dress-grid > div { padding: 0.4rem clamp(1.4rem, 4vw, 2.8rem); }
-.dress-grid > div + div { border-left: 1px solid var(--line); }
-.dress-grid dt {
-  margin-bottom: 0.7rem;
-  font-family: var(--sans);
-  text-transform: uppercase;
-  letter-spacing: 0.24em;
-  font-size: 0.68rem;
-  color: var(--muted);
+.dress-look {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
-.dress-grid dd {
+.dress-photo {
+  width: 100%;
+  max-width: 248px;
+  height: auto;
+  object-fit: contain;
+  mix-blend-mode: multiply; /* funde el fondo blanco con el papel */
+}
+.dress-desc {
   font-family: var(--serif);
-  font-weight: 400;
   font-size: clamp(1.45rem, 3vw, 1.85rem);
   line-height: 1.2;
   color: var(--ink);
@@ -669,6 +675,5 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .nav a { font-size: 0.62rem; letter-spacing: 0.16em; }
   .count { flex-wrap: wrap; justify-content: center; gap: 0.6rem 1rem; }
   .count-sep { display: none; }
-  .dress-grid { grid-template-columns: 1fr; gap: 1.6rem; max-width: 320px; }
-  .dress-grid > div + div { border-left: 0; padding-top: 1.6rem; border-top: 1px solid var(--line); }
+  .dress-grid { grid-template-columns: 1fr; gap: 2.4rem; max-width: 300px; }
 }
