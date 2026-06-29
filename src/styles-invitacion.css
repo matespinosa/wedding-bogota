@@ -21,10 +21,10 @@
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --nav-h: 72px;
+  --proposal-switcher-bottom: 5.5rem;
 
   --z-spread: 1;
   --z-nav: 20;
-  --z-ribbon: 30;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -617,30 +617,12 @@ img { display: block; max-width: 100%; }
   transform: scale(1.15);
 }
 
-/* ---------- Ribbon ---------- */
-.proposal-ribbon {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: var(--z-ribbon);
-  font-family: var(--sans);
-  font-size: 0.6rem;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: var(--on-dark);
-  background: var(--green-deep);
-  padding: 0.5rem 0.85rem;
-  border-radius: 999px;
-  opacity: 0.88;
-  transition: opacity 0.3s var(--ease);
-}
-.proposal-ribbon:hover { opacity: 1; }
-
 /* ---------- Responsive ---------- */
 @media (max-width: 760px) {
-  :root { --nav-h: 64px; }
+  :root {
+    --nav-h: 64px;
+    --proposal-switcher-bottom: 4.75rem;
+  }
 
   .spread-body--split {
     grid-template-columns: 1fr;
@@ -681,5 +663,5 @@ img { display: block; max-width: 100%; }
     min-height: 100svh;
   }
   .spread[hidden] { display: block !important; }
-  .invitation-nav, .proposal-ribbon { display: none; }
+  .invitation-nav { display: none; }
 }
