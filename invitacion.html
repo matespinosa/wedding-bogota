@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Mateo &amp; Julieth · Invitación</title>
+  <meta name="description" content="Te invitamos a nuestra boda el 3 de octubre de 2026 en Bogotá." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Mateo &amp; Julieth · Te invitamos a nuestra boda" />
+  <meta property="og:description" content="Acompáñanos el 3 de octubre de 2026 en Bogotá." />
+  <meta property="og:image" content="/images/social-thumbnail.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Tangerine:wght@400;700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/styles-invitacion.css" />
+</head>
+<body>
+  <div class="invitation-app" id="invitation-app" aria-live="polite">
+    <div class="invitation-viewport" id="invitation-viewport">
+
+      <!-- 1. PORTADA -->
+      <section class="spread spread--cover is-active" data-spread="portada" aria-label="Portada de la invitación">
+        <div class="spread-cover-media">
+          <img src="/images/hero.jpg" alt="Sendero entre el bosque" fetchpriority="high" decoding="async" />
+          <div class="spread-cover-scrim"></div>
+        </div>
+        <div class="spread-cover-content">
+          <p class="kicker on-dark anim-item">Acompáñanos en la boda de</p>
+          <h1 class="script-display anim-item">Mateo <span class="amp">&amp;</span> Julieth</h1>
+          <span class="rule on-dark anim-item"></span>
+          <p class="hero-meta anim-item">Sábado · 3 de Octubre · 2026</p>
+          <p class="cover-hint anim-item">Toca <em>Siguiente</em> o desliza para abrir la invitación</p>
+        </div>
+      </section>
+
+      <!-- 2. LA FECHA -->
+      <section class="spread spread--paper" id="fecha" data-spread="fecha" aria-label="Fecha y cuenta regresiva" hidden>
+        <div class="spread-body spread-body--center">
+          <svg class="date-leaf anim-item" viewBox="0 0 48 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M24 60 L24 18" />
+            <path d="M24 30 C16 28 12 22 12 14 C20 14 26 18 26 26" />
+            <path d="M24 40 C32 38 36 32 36 24 C28 24 22 28 22 36" />
+          </svg>
+          <h2 class="section-title anim-item">3 de Octubre, 2026</h2>
+          <p class="place-line anim-item">Bogotá, Colombia</p>
+          <div class="count anim-item" id="countdown">
+            <div><b data-unit="dias">--</b><i>Días</i></div>
+            <span class="count-sep">·</span>
+            <div><b data-unit="horas">--</b><i>Horas</i></div>
+            <span class="count-sep">·</span>
+            <div><b data-unit="minutos">--</b><i>Min</i></div>
+            <span class="count-sep">·</span>
+            <div><b data-unit="segundos">--</b><i>Seg</i></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. NUESTRA HISTORIA -->
+      <section class="spread spread--paper" id="historia" data-spread="historia" aria-label="Nuestra historia" hidden>
+        <div class="spread-body spread-body--split">
+          <figure class="story-figure anim-item">
+            <img src="/images/historia.jpg" alt="Mateo y Julieth" loading="lazy" decoding="async" />
+          </figure>
+          <div class="story-text">
+            <span class="kicker anim-item">Nuestra historia</span>
+            <h2 class="serif-title anim-item">Mateo &amp; Julieth</h2>
+            <p class="anim-item">Hace casi cuatro años y medio, Dios cruzó nuestros caminos. Lo que comenzó como una amistad llena de conversaciones interminables se convirtió en una historia de confianza, apoyo y crecimiento.</p>
+            <p class="anim-item">Fuimos confidentes en los momentos más importantes de nuestras vidas, y aunque el amor siempre estuvo presente, esperó pacientemente hasta el momento perfecto para florecer. Hoy celebramos ese amor y el comienzo de una nueva etapa.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. CEREMONIA -->
+      <section class="spread spread--paper" data-spread="ceremonia" aria-label="Ceremonia religiosa" hidden>
+        <div class="spread-body spread-body--place">
+          <span class="kicker anim-item">El gran día</span>
+          <h2 class="serif-title anim-item">Ceremonia religiosa</h2>
+          <p class="script-sub anim-item">11:00 de la mañana</p>
+          <figure class="place-figure anim-item">
+            <img src="/images/la-colina-church.webp" alt="Iglesia de Dios Ministerial de Jesucristo Internacional, sede La Colina" loading="lazy" decoding="async" />
+          </figure>
+          <p class="place-name anim-item">Iglesia de Dios Ministerial de Jesucristo Internacional</p>
+          <p class="place-addr anim-item">Sede La Colina · Bogotá, Colombia</p>
+          <a class="btn-outline anim-item" href="https://www.google.com/maps/search/?api=1&amp;query=Iglesia+de+Dios+Ministerial+de+Jesucristo+Internacional+sede+La+Colina+Bogota" target="_blank" rel="noopener">Cómo llegar</a>
+        </div>
+      </section>
+
+      <!-- 5. RECEPCIÓN -->
+      <section class="spread spread--paper" data-spread="recepcion" aria-label="Recepción y celebración" hidden>
+        <div class="spread-body spread-body--place">
+          <span class="kicker anim-item">El gran día</span>
+          <h2 class="serif-title anim-item">Reunión y celebración</h2>
+          <p class="script-sub anim-item">5:00 de la tarde</p>
+          <figure class="place-figure anim-item">
+            <img src="/images/magnolio-2.jpg" alt="Retiro San Juan · Salón Magnolia" loading="lazy" decoding="async" />
+          </figure>
+          <p class="place-name anim-item">Retiro San Juan · Salón Magnolia</p>
+          <p class="place-addr anim-item">Vía La Calera · Bogotá, Colombia</p>
+          <a class="btn-outline anim-item" href="https://www.google.com/maps/search/?api=1&amp;query=Retiro+San+Juan+Salon+Magnolia+Via+La+Calera+Bogota" target="_blank" rel="noopener">Cómo llegar</a>
+        </div>
+      </section>
+
+      <!-- 6. VESTUARIO -->
+      <section class="spread spread--paper spread--dress" id="vestuario" data-spread="vestuario" aria-label="Código de vestir" hidden>
+        <div class="spread-body spread-body--center">
+          <h2 class="serif-title anim-item">Vestuario</h2>
+          <p class="script-sub anim-item">código de vestir</p>
+          <p class="dress-level anim-item">Formal</p>
+          <div class="dress-grid anim-item">
+            <figure class="dress-look">
+              <img class="dress-photo" src="/images/dress-women.png" alt="Mujeres: vestido largo negro de gala" loading="lazy" decoding="async" />
+              <figcaption class="dress-desc">Vestido largo</figcaption>
+            </figure>
+            <figure class="dress-look">
+              <img class="dress-photo" src="/images/dress-men.png" alt="Hombres: esmoquin negro con corbatín y zapatos formales" loading="lazy" decoding="async" />
+              <figcaption class="dress-desc">Traje y corbata</figcaption>
+            </figure>
+          </div>
+          <p class="dress-reserved anim-item">El color blanco está reservado para la novia.</p>
+        </div>
+      </section>
+
+      <!-- 7. RSVP -->
+      <section class="spread spread--paper spread--scroll" id="rsvp" data-spread="rsvp" aria-label="Confirmar asistencia" hidden>
+        <div class="spread-body spread-body--rsvp">
+          <h2 class="serif-title centered anim-item">Confirma tu asistencia</h2>
+          <p class="script-sub centered anim-item">te esperamos</p>
+          <p class="rsvp-note anim-item">Por favor confírmanos antes del <strong>15 de septiembre de 2026</strong>.</p>
+          <form id="rsvp-form" class="rsvp-form anim-item" novalidate>
+            <div class="field">
+              <label>Nombre</label>
+              <div id="guests" class="guests"></div>
+              <button type="button" class="btn-add" id="add-guest">+ Agregar otra persona</button>
+              <p class="field-hint">
+                Solo las personas registradas en la lista de invitados podrán asistir.
+                Si no encuentras tu nombre, escríbenos.
+              </p>
+            </div>
+            <label class="field">
+              <span>Teléfono</span>
+              <input type="tel" name="telefono" inputmode="tel" required autocomplete="tel"
+                     placeholder="+57 300 000 0000" />
+            </label>
+            <label class="field">
+              <span>Confirmar asistencia</span>
+              <select name="asistencia" required>
+                <option value="">Selecciona</option>
+                <option value="si">Sí, allí estaré</option>
+                <option value="no">No podré asistir</option>
+              </select>
+            </label>
+            <button type="submit" class="btn-solid">Enviar confirmación</button>
+            <p class="form-note" id="form-note" role="status"></p>
+          </form>
+
+          <template id="guest-tpl">
+            <div class="guest-entry">
+              <div class="guest-row">
+                <div class="combobox" data-combobox>
+                  <input type="text" role="combobox" aria-expanded="false"
+                         aria-autocomplete="list" autocomplete="off"
+                         placeholder="Busca o escribe el nombre" />
+                  <ul class="combobox-list" role="listbox" aria-label="Invitados" hidden></ul>
+                </div>
+                <button type="button" class="guest-remove" aria-label="Quitar persona" hidden>&times;</button>
+              </div>
+              <p class="guest-msg" role="status"></p>
+            </div>
+          </template>
+        </div>
+      </section>
+
+      <!-- 8. CIERRE -->
+      <section class="spread spread--closing" data-spread="cierre" aria-label="Cierre" hidden>
+        <div class="spread-closing-media">
+          <img src="/images/cierre.jpg" alt="" loading="lazy" decoding="async" />
+          <div class="spread-closing-scrim"></div>
+        </div>
+        <div class="spread-closing-content">
+          <span class="rule on-dark anim-item"></span>
+          <p class="script-display anim-item">Mateo <span class="amp">&amp;</span> Julieth</p>
+          <p class="closing-tag anim-item">Con amor · La Calera, Bogotá · 2026</p>
+        </div>
+      </section>
+
+    </div>
+
+    <nav class="invitation-nav" aria-label="Navegación de la invitación">
+      <button type="button" class="inv-btn" id="inv-prev" disabled>
+        <span aria-hidden="true">←</span> Anterior
+      </button>
+      <div class="inv-progress" id="inv-progress" role="tablist" aria-label="Progreso de la invitación"></div>
+      <button type="button" class="inv-btn inv-btn--primary" id="inv-next">
+        Siguiente <span aria-hidden="true">→</span>
+      </button>
+    </nav>
+  </div>
+
+  <a class="proposal-ribbon" href="/">← Versión principal</a>
+
+  <script type="module" src="/src/main-invitacion.js"></script>
+</body>
+</html>
