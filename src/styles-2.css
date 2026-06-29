@@ -235,6 +235,12 @@ p { max-width: 64ch; text-wrap: pretty; }
 .ed-hero-cta .text-link { color: var(--on-photo); border-color: oklch(0.99 0 0 / 0.4); }
 .ed-hero-cta .text-link:hover { border-color: var(--on-photo); }
 
+.ed-hero-count {
+  text-align: center;
+  padding: clamp(2.4rem, 5vw, 3.6rem) 0 clamp(3rem, 6vw, 4rem);
+  border-bottom: 1px solid var(--line);
+}
+
 /* ======================================================
    NUESTRA HISTORIA — foto editorial + narrativa
    ====================================================== */
