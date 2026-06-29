@@ -1,9 +1,11 @@
+import { PageFlip } from 'page-flip';
+import 'page-flip/src/Style/stPageFlip.css';
 import gsap from 'gsap';
 
-const SWIPE_THRESHOLD = 56;
-const SWIPE_MAX_VERTICAL = 80;
+const PAGE_WIDTH = 390;
+const PAGE_HEIGHT = 620;
 
-/** Navegación pliego a pliego con animaciones GSAP tipo pasar página. */
+/** Navegación de libro con StPageFlip + entrada de contenido con GSAP. */
 export function initInvitationNav() {
   const viewport = document.getElementById('invitation-viewport');
   const prevBtn = document.getElementById('inv-prev');
@@ -13,11 +15,8 @@ export function initInvitationNav() {
 
   const spreads = [...viewport.querySelectorAll('.spread')];
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const compact = matchMedia('(max-width: 760px)').matches;
   let current = 0;
-  let animating = false;
-
-  ensurePageShadow(viewport);
+  let pageFlip = null;
 
   spreads.forEach((spread, index) => {
     const dot = document.createElement('button');
@@ -32,7 +31,7 @@ export function initInvitationNav() {
   const dots = [...progressEl.querySelectorAll('.inv-dot')];
 
   function updateControls() {
-    prevBtn.disabled = current === 0 || animating;
+    prevBtn.disabled = current === 0;
     if (current === spreads.length - 1) {
       nextBtn.innerHTML = 'Volver al inicio <span aria-hidden="true">↺</span>';
     } else {
@@ -46,10 +45,6 @@ export function initInvitationNav() {
     });
   }
 
-  function getScrollableBody(spread) {
-    return spread.querySelector('.spread-body');
-  }
-
   function revealSpread(index) {
     const spread = spreads[index];
     const items = spread.querySelectorAll('.anim-item');
@@ -60,130 +55,28 @@ export function initInvitationNav() {
     return gsap.from(items, {
       opacity: 0,
       y: 18,
-      duration: compact ? 0.5 : 0.62,
-      stagger: compact ? 0.05 : 0.07,
+      duration: 0.55,
+      stagger: 0.055,
       ease: 'power2.out',
-      delay: 0.08,
+      delay: 0.04,
     });
   }
 
-  function resetSpread(spread) {
-    spread.classList.remove('is-active', 'is-leaving', 'is-entering');
-    gsap.set(spread, { clearProps: 'all' });
-  }
-
-  function instantSwap(outgoing, incoming) {
-    outgoing.classList.remove('is-active');
-    outgoing.hidden = true;
-    resetSpread(outgoing);
-
-    incoming.hidden = false;
-    incoming.classList.add('is-active');
-  }
-
-  function animatePageTurn(outgoing, incoming, direction) {
-    const duration = compact ? 0.62 : 0.78;
-    const outOrigin = direction > 0 ? 'left center' : 'right center';
-    const inOrigin = direction > 0 ? 'right center' : 'left center';
-    const outRotate = direction > 0 ? -78 : 78;
-    const inStart = direction > 0 ? 78 : -78;
-
-    outgoing.classList.remove('is-active');
-    outgoing.classList.add('is-leaving');
-    incoming.hidden = false;
-    incoming.classList.add('is-entering');
-    viewport.classList.add('is-turning');
-
-    gsap.set(outgoing, {
-      zIndex: 3,
-      transformOrigin: outOrigin,
-      rotationY: 0,
-      x: 0,
-      opacity: 1,
-      visibility: 'visible',
-      pointerEvents: 'none',
-    });
-
-    gsap.set(incoming, {
-      zIndex: 2,
-      transformOrigin: inOrigin,
-      rotationY: inStart,
-      x: 0,
-      opacity: 0.72,
-      visibility: 'visible',
-      pointerEvents: 'none',
-    });
-
-    const shadow = viewport.querySelector('.page-turn-shadow');
-    if (shadow) gsap.set(shadow, { opacity: 0.22 });
-
-    const tl = gsap.timeline({
-      defaults: { ease: 'power2.inOut', transformPerspective: 1200 },
-    });
-
-    tl.to(
-      outgoing,
-      {
-        rotationY: outRotate,
-        x: direction * (compact ? -18 : -28),
-        opacity: 0,
-        duration,
-      },
-      0,
-    )
-      .to(
-        incoming,
-        {
-          rotationY: 0,
-          x: 0,
-          opacity: 1,
-          duration,
-        },
-        0.06,
-      )
-      .to(
-        shadow,
-        {
-          opacity: 0,
-          duration: duration * 0.85,
-        },
-        0.1,
-      );
-
-    return tl;
-  }
-
-  async function goTo(index) {
-    if (animating || index === current || index < 0 || index >= spreads.length) return;
-
-    animating = true;
-    const direction = index > current ? 1 : -1;
-    const outgoing = spreads[current];
-    const incoming = spreads[index];
-
-    updateControls();
-
-    if (reduced) {
-      instantSwap(outgoing, incoming);
-    } else {
-      await animatePageTurn(outgoing, incoming, direction);
-
-      outgoing.classList.remove('is-active', 'is-leaving');
-      outgoing.hidden = true;
-      resetSpread(outgoing);
-
-      incoming.classList.remove('is-entering');
-      incoming.classList.add('is-active');
-      gsap.set(incoming, { clearProps: 'transform,opacity,zIndex,transformOrigin,visibility,pointerEvents' });
-      viewport.classList.remove('is-turning');
-    }
-
+  function setCurrent(index) {
+    if (index < 0 || index >= spreads.length) return;
     current = index;
-    getScrollableBody(incoming)?.scrollTo?.(0, 0);
-    await revealSpread(index);
-
-    animating = false;
+    spreads.forEach((spread, spreadIndex) => {
+      spread.classList.toggle('is-active', spreadIndex === current);
+      if (spreadIndex === current) spread.querySelector('.spread-body')?.scrollTo?.(0, 0);
+    });
     updateControls();
+    revealSpread(index);
+  }
+
+  function goTo(index) {
+    if (!pageFlip || index === current || index < 0 || index >= spreads.length) return;
+    if (reduced) pageFlip.turnToPage(index);
+    else pageFlip.flip(index, 'bottom');
   }
 
   prevBtn.addEventListener('click', () => goTo(current - 1));
@@ -204,52 +97,46 @@ export function initInvitationNav() {
     }
   });
 
-  let touchStartX = 0;
-  let touchStartY = 0;
+  pageFlip = new PageFlip(viewport, {
+    width: PAGE_WIDTH,
+    height: PAGE_HEIGHT,
+    size: 'stretch',
+    minWidth: 300,
+    maxWidth: 460,
+    minHeight: 460,
+    maxHeight: 720,
+    drawShadow: !reduced,
+    flippingTime: reduced ? 1 : 850,
+    usePortrait: true,
+    showCover: true,
+    autoSize: false,
+    maxShadowOpacity: 0.38,
+    mobileScrollSupport: true,
+    swipeDistance: 36,
+    clickEventForward: true,
+    showPageCorners: false,
+    disableFlipByClick: false,
+  });
 
-  viewport.addEventListener(
-    'touchstart',
-    (event) => {
-      touchStartX = event.changedTouches[0].clientX;
-      touchStartY = event.changedTouches[0].clientY;
-    },
-    { passive: true },
-  );
-
-  viewport.addEventListener(
-    'touchend',
-    (event) => {
-      if (animating) return;
-
-      const dx = event.changedTouches[0].clientX - touchStartX;
-      const dy = event.changedTouches[0].clientY - touchStartY;
-
-      if (Math.abs(dx) < SWIPE_THRESHOLD) return;
-      if (Math.abs(dy) > SWIPE_MAX_VERTICAL) return;
-      if (Math.abs(dx) < Math.abs(dy) * 1.2) return;
-
-      const body = getScrollableBody(spreads[current]);
-      if (body && body.scrollHeight > body.clientHeight + 8) {
-        const atTop = body.scrollTop <= 4;
-        const atBottom = body.scrollTop + body.clientHeight >= body.scrollHeight - 4;
-        if (dx < 0 && !atBottom) return;
-        if (dx > 0 && !atTop) return;
-      }
-
-      if (dx < -SWIPE_THRESHOLD && current < spreads.length - 1) goTo(current + 1);
-      if (dx > SWIPE_THRESHOLD && current > 0) goTo(current - 1);
-    },
-    { passive: true },
-  );
-
+  pageFlip.on('init', (event) => setCurrent(event.data.page ?? 0));
+  pageFlip.on('flip', (event) => setCurrent(event.data));
+  pageFlip.on('changeOrientation', () => {
+    // StPageFlip may change between one-page and two-page spreads on resize.
+    setCurrent(pageFlip.getCurrentPageIndex());
+  });
+  pageFlip.loadFromHTML(spreads);
+  protectInteractiveControls(viewport);
   updateControls();
-  revealSpread(0);
 }
 
-function ensurePageShadow(viewport) {
-  if (viewport.querySelector('.page-turn-shadow')) return;
-  const shadow = document.createElement('div');
-  shadow.className = 'page-turn-shadow';
-  shadow.setAttribute('aria-hidden', 'true');
-  viewport.appendChild(shadow);
+function protectInteractiveControls(viewport) {
+  const selector = 'a, button, input, select, textarea, label, .combobox, .combobox-list';
+  const stopWhenInteractive = (event) => {
+    if (event.target instanceof Element && event.target.closest(selector)) {
+      event.stopPropagation();
+    }
+  };
+
+  viewport.addEventListener('mousedown', stopWhenInteractive, true);
+  viewport.addEventListener('touchstart', stopWhenInteractive, true);
 }
