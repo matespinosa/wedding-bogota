@@ -47,8 +47,7 @@ function prepareRevealChildren(items) {
     const children = getRevealChildren(item);
     children.forEach((child, index) => {
       child.classList.add('reveal-child');
-      child.style.setProperty('--reveal-delay', `${index * 110}ms`);
-      child.style.setProperty('--reveal-x', `${getRevealDirection(child, index)}px`);
+      child.style.setProperty('--reveal-delay', `${Math.min(index, 5) * 70}ms`);
     });
   }
 }
@@ -69,10 +68,4 @@ function getRevealChildren(item) {
 
   const nested = direct[0] ? [...direct[0].children].filter((child) => child.tagName !== 'TEMPLATE') : [];
   return nested.length > 1 ? nested : direct;
-}
-
-function getRevealDirection(child, index) {
-  if (child.matches('figure, .story-figure, .gd-figure, .dress-look:first-child')) return -78;
-  if (child.matches('form, .story-text, .dress-look:last-child')) return 78;
-  return index % 2 === 0 ? -62 : 62;
 }

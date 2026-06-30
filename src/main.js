@@ -13,7 +13,7 @@ initReveal();
 initCountdown(WEDDING_DATE);
 loadGuestData(ENDPOINT); // lista + confirmados desde la hoja (en background)
 initRsvp(ENDPOINT);
-initSectionMotion();
+initParallaxExperience();
 
 // Navegación: fondo sólido tras hacer scroll fuera del hero.
 const nav = document.getElementById('nav');
@@ -22,59 +22,76 @@ onScroll();
 window.addEventListener('scroll', onScroll, { passive: true });
 
 // Motas de luz WebGPU sobre el hero (degrada con elegancia si no hay soporte).
-initParticles(document.getElementById('hero-canvas')).catch((err) => {
-  console.warn('[hero] WebGPU no disponible, se usa solo la fotografía:', err);
-});
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  initParticles(document.getElementById('hero-canvas')).catch((err) => {
+    console.warn('[hero] WebGPU no disponible, se usa solo la fotografía:', err);
+  });
+}
 
-function initSectionMotion() {
+function initParallaxExperience() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const sections = [
-    ...document.querySelectorAll('.date-band, .story, .gran-dia, .dress-code, .rsvp, .detail-band, .footer'),
+  const mediaLayers = [
+    ...document.querySelectorAll(
+      '.hero-media > img, .story-figure > img, .gd-figure > img, .detail-band > img',
+    ),
   ];
-  if (!sections.length) return;
+  if (!mediaLayers.length) return;
 
-  const motionItems = [];
+  const activeLayers = new Set();
+  const observer = 'IntersectionObserver' in window
+    ? new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle('is-parallax-active', entry.isIntersecting);
+          if (entry.isIntersecting) activeLayers.add(entry.target);
+          else activeLayers.delete(entry.target);
+        });
+      },
+      { rootMargin: '14% 0px' },
+    )
+    : null;
 
-  sections.forEach((section, sectionIndex) => {
-    section.classList.add('motion-section');
-    const items = getSectionMotionItems(section);
-
-    items.forEach((item, itemIndex) => {
-      const direction = (sectionIndex + itemIndex) % 2 === 0 ? -1 : 1;
-      item.classList.add('motion-item');
-      item.style.setProperty('--motion-direction', String(direction));
-      motionItems.push(item);
-    });
+  mediaLayers.forEach((layer) => {
+    const isHero = layer.closest('.hero-media');
+    const isFullBleed = layer.closest('.detail-band');
+    layer.classList.add('parallax-media');
+    layer.dataset.parallaxStrength = String(isHero ? 48 : isFullBleed ? 40 : 28);
+    layer.style.setProperty('--parallax-scale', isHero || isFullBleed ? '1.11' : '1.09');
+    if (observer) observer.observe(layer);
+    else activeLayers.add(layer);
   });
 
-  if (!motionItems.length) return;
+  const edgeBlur = document.createElement('div');
+  edgeBlur.className = 'viewport-edge-blur viewport-edge-blur--top';
+  edgeBlur.setAttribute('aria-hidden', 'true');
+  const bottomEdgeBlur = edgeBlur.cloneNode();
+  bottomEdgeBlur.className = 'viewport-edge-blur viewport-edge-blur--bottom';
+  document.body.append(edgeBlur, bottomEdgeBlur);
 
   let ticking = false;
+  let lastScrollY = window.scrollY;
 
   const update = () => {
     const viewportHeight = window.innerHeight;
+    const scrollDelta = window.scrollY - lastScrollY;
 
-    for (const item of motionItems) {
-      const rect = item.getBoundingClientRect();
-      if (rect.bottom < -80 || rect.top > viewportHeight + 80) continue;
+    if (Math.abs(scrollDelta) > 0.5) {
+      document.documentElement.dataset.scrollDirection = scrollDelta > 0 ? 'down' : 'up';
+    }
+    if (window.scrollY <= 1) delete document.documentElement.dataset.scrollDirection;
 
-      // Each item fades only when that specific text/image/button is about to leave the viewport.
-      const exitWindow = Math.min(viewportHeight * 0.22, Math.max(rect.height * 0.42, 120));
-      const exitProgress = rect.bottom < exitWindow
-        ? Math.min(1, (exitWindow - rect.bottom) / exitWindow)
-        : 0;
-      const direction = Number(item.style.getPropertyValue('--motion-direction')) || 1;
-      const easedExit = exitProgress * exitProgress;
-      const opacity = 1 - easedExit * 0.16;
-      const blur = easedExit * 1.6;
-      const x = easedExit * direction * -42;
-
-      item.style.setProperty('--motion-exit-opacity', opacity.toFixed(3));
-      item.style.setProperty('--motion-exit-blur', `${blur.toFixed(2)}px`);
-      item.style.setProperty('--motion-exit-x', `${x.toFixed(1)}px`);
+    for (const layer of activeLayers) {
+      const rect = layer.getBoundingClientRect();
+      const travelRange = (viewportHeight + rect.height) / 2;
+      const centerOffset = rect.top + rect.height / 2 - viewportHeight / 2;
+      const progress = Math.max(-1, Math.min(1, centerOffset / travelRange));
+      const baseStrength = Number(layer.dataset.parallaxStrength) || 16;
+      const strength = window.innerWidth <= 620 ? baseStrength * 0.62 : baseStrength;
+      layer.style.setProperty('--parallax-y', `${(-progress * strength).toFixed(2)}px`);
     }
 
+    lastScrollY = window.scrollY;
     ticking = false;
   };
 
@@ -87,12 +104,4 @@ function initSectionMotion() {
   update();
   window.addEventListener('scroll', requestUpdate, { passive: true });
   window.addEventListener('resize', requestUpdate);
-}
-
-function getSectionMotionItems(section) {
-  return [
-    ...section.querySelectorAll(
-      '.date-display, .place-line, .count, .story-text, .story-figure, .gd-heading, .gran-dia-place, .dress-code .serif-title, .dress-code .script-sub, .dress-level, .dress-look, .dress-reserved, .rsvp-copy, .rsvp-form, .detail-band .serif-title, .detail-band .btn-outline, .footer .rule, .footer-names, .footer-tag',
-    ),
-  ];
 }

@@ -31,6 +31,7 @@
   --maxw: 1180px;
 
   --z-base: 1;
+  --z-edge-blur: 40;
   --z-nav: 50;
 }
 
@@ -50,14 +51,43 @@ body {
 
 img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
-.motion-item {
-  --motion-exit-opacity: 1;
-  --motion-exit-blur: 0px;
-  --motion-exit-x: 0px;
-  opacity: var(--motion-exit-opacity);
-  filter: blur(var(--motion-exit-blur));
-  transform: translate3d(var(--motion-exit-x), 0, 0);
-  will-change: opacity, filter, transform;
+.parallax-media {
+  --parallax-y: 0px;
+  --parallax-scale: 1.06;
+  transform: translate3d(0, var(--parallax-y), 0) scale(var(--parallax-scale));
+  transform-origin: center;
+}
+.parallax-media.is-parallax-active { will-change: transform; }
+
+.viewport-edge-blur {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: var(--z-edge-blur);
+  height: 5svh;
+  min-height: 1px;
+  pointer-events: none;
+  opacity: 0;
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  transition: opacity 160ms linear;
+  contain: strict;
+}
+.viewport-edge-blur--top {
+  top: 0;
+  background: linear-gradient(180deg, rgba(241, 240, 234, 0.38), transparent);
+  mask-image: linear-gradient(180deg, #000, transparent);
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent);
+}
+.viewport-edge-blur--bottom {
+  bottom: 0;
+  background: linear-gradient(0deg, rgba(241, 240, 234, 0.38), transparent);
+  mask-image: linear-gradient(0deg, #000, transparent);
+  -webkit-mask-image: linear-gradient(0deg, #000, transparent);
+}
+html[data-scroll-direction="down"] .viewport-edge-blur--top,
+html[data-scroll-direction="up"] .viewport-edge-blur--bottom {
+  opacity: 1;
 }
 
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 1.6rem; width: 100%; }
@@ -298,8 +328,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   overflow: hidden;
   box-shadow: 0 36px 76px -34px rgba(35, 43, 32, 0.55);
 }
-.story-figure img { transition: transform 1.2s var(--ease); }
-.story-figure:hover img { transform: scale(1.04); }
+.story-figure img:not(.parallax-media) { transition: transform 1.2s var(--ease); }
+.story-figure:hover img:not(.parallax-media) { transform: scale(1.04); }
 .story-text { max-width: 48ch; }
 .story-text .kicker { margin-bottom: 1.1rem; display: block; }
 .story-text .serif-title { margin-bottom: 1.4rem; }
@@ -365,7 +395,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   object-fit: cover;
   transition: transform 1.2s var(--ease);
 }
-.gran-dia-place:hover .gd-figure img { transform: scale(1.04); }
+.gran-dia-place:hover .gd-figure img:not(.parallax-media) { transform: scale(1.04); }
+.gd-figure img.parallax-media { transition: none; }
 .gd-time {
   font-family: var(--sans);
   font-weight: 400;
@@ -678,7 +709,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
 
 /* ---------- Reveal ---------- */
-.reveal { transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
+.reveal { transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
 .reveal.is-hidden {
   opacity: 1;
   transform: none;
@@ -686,35 +717,26 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .reveal-child {
   transition:
     opacity 0.9s var(--ease),
-    transform 0.9s var(--ease),
-    filter 0.9s var(--ease);
+    transform 0.7s var(--ease);
   transition-delay: var(--reveal-delay, 0ms);
 }
 .reveal.is-hidden .reveal-child {
   opacity: 0;
-  transform: translate3d(var(--reveal-x, 0px), 18px, 0);
-  filter: blur(2.2px);
+  transform: translate3d(0, 12px, 0);
 }
 .reveal.is-visible .reveal-child,
 .reveal:not(.is-hidden) .reveal-child {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  filter: blur(0);
-}
-.reveal.is-visible .motion-item.reveal-child,
-.reveal:not(.is-hidden) .motion-item.reveal-child {
-  opacity: var(--motion-exit-opacity);
-  transform: translate3d(var(--motion-exit-x), 0, 0);
-  filter: blur(var(--motion-exit-blur));
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .motion-item {
-    opacity: 1 !important;
-    filter: none !important;
+  .parallax-media {
     transform: none !important;
+    will-change: auto !important;
   }
+  .viewport-edge-blur { display: none; }
   .reveal,
   .reveal.is-hidden,
   .reveal-child {
@@ -725,7 +747,10 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   }
   .scroll-cue span { animation: none; }
   .story-figure img,
-  .gd-figure img { transition: none; }
+  .gd-figure img {
+    transform: none !important;
+    transition: none;
+  }
 }
 
 /* ---------- Responsive ---------- */
