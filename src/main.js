@@ -34,34 +34,45 @@ function initSectionMotion() {
   ];
   if (!sections.length) return;
 
-  sections.forEach((section, index) => {
+  const motionItems = [];
+
+  sections.forEach((section, sectionIndex) => {
     section.classList.add('motion-section');
-    section.style.setProperty('--section-direction', index % 2 === 0 ? '-1' : '1');
+    const items = getSectionMotionItems(section);
+
+    items.forEach((item, itemIndex) => {
+      const direction = (sectionIndex + itemIndex) % 2 === 0 ? -1 : 1;
+      item.classList.add('motion-item');
+      item.style.setProperty('--motion-direction', String(direction));
+      motionItems.push(item);
+    });
   });
+
+  if (!motionItems.length) return;
 
   let ticking = false;
 
   const update = () => {
     const viewportHeight = window.innerHeight;
 
-    for (const section of sections) {
-      const rect = section.getBoundingClientRect();
-      if (rect.bottom < -160 || rect.top > viewportHeight + 160) continue;
+    for (const item of motionItems) {
+      const rect = item.getBoundingClientRect();
+      if (rect.bottom < -80 || rect.top > viewportHeight + 80) continue;
 
-      // Fade/blur only when the section is close to disappearing, not while it is being read.
-      const exitWindow = Math.min(viewportHeight * 0.34, Math.max(rect.height * 0.28, 180));
+      // Each item fades only when that specific text/image/button is about to leave the viewport.
+      const exitWindow = Math.min(viewportHeight * 0.22, Math.max(rect.height * 0.42, 120));
       const exitProgress = rect.bottom < exitWindow
         ? Math.min(1, (exitWindow - rect.bottom) / exitWindow)
         : 0;
-      const direction = Number(section.style.getPropertyValue('--section-direction')) || 1;
+      const direction = Number(item.style.getPropertyValue('--motion-direction')) || 1;
       const easedExit = exitProgress * exitProgress;
-      const opacity = 1 - easedExit * 0.18;
-      const blur = easedExit * 2.4;
-      const x = easedExit * direction * -48;
+      const opacity = 1 - easedExit * 0.16;
+      const blur = easedExit * 1.6;
+      const x = easedExit * direction * -42;
 
-      section.style.setProperty('--section-exit-opacity', opacity.toFixed(3));
-      section.style.setProperty('--section-exit-blur', `${blur.toFixed(2)}px`);
-      section.style.setProperty('--section-exit-x', `${x.toFixed(1)}px`);
+      item.style.setProperty('--motion-exit-opacity', opacity.toFixed(3));
+      item.style.setProperty('--motion-exit-blur', `${blur.toFixed(2)}px`);
+      item.style.setProperty('--motion-exit-x', `${x.toFixed(1)}px`);
     }
 
     ticking = false;
@@ -76,4 +87,12 @@ function initSectionMotion() {
   update();
   window.addEventListener('scroll', requestUpdate, { passive: true });
   window.addEventListener('resize', requestUpdate);
+}
+
+function getSectionMotionItems(section) {
+  return [
+    ...section.querySelectorAll(
+      '.date-display, .place-line, .count, .story-text, .story-figure, .gd-heading, .gran-dia-place, .dress-code .serif-title, .dress-code .script-sub, .dress-level, .dress-look, .dress-reserved, .rsvp-copy, .rsvp-form, .detail-band .serif-title, .detail-band .btn-outline, .footer .rule, .footer-names, .footer-tag',
+    ),
+  ];
 }
