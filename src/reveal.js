@@ -13,6 +13,8 @@ export function initReveal() {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce || !('IntersectionObserver' in window)) return; // todo queda visible
 
+  prepareRevealChildren(items);
+
   // Oculta solo lo que está bajo el pliegue al cargar.
   for (const el of items) {
     if (el.getBoundingClientRect().top > window.innerHeight * 0.85) {
@@ -24,7 +26,7 @@ export function initReveal() {
     (entries) => {
       for (const entry of entries) {
         if (entry.isIntersecting) {
-          entry.target.classList.remove('is-hidden');
+          revealItem(entry.target);
           observer.unobserve(entry.target);
         }
       }
@@ -37,5 +39,34 @@ export function initReveal() {
   }
 
   // Red de seguridad: nunca dejar contenido oculto.
-  setTimeout(() => items.forEach((el) => el.classList.remove('is-hidden')), 2500);
+  setTimeout(() => items.forEach(revealItem), 2500);
+}
+
+function prepareRevealChildren(items) {
+  for (const item of items) {
+    const children = getRevealChildren(item);
+    children.forEach((child, index) => {
+      child.classList.add('reveal-child');
+      child.style.setProperty('--reveal-delay', `${index * 110}ms`);
+      child.style.setProperty('--reveal-x', `${index % 2 === 0 ? -36 : 36}px`);
+    });
+  }
+}
+
+function revealItem(item) {
+  item.classList.remove('is-hidden');
+  item.classList.add('is-visible');
+}
+
+function getRevealChildren(item) {
+  const direct = [...item.children].filter((child) => {
+    if (child.tagName === 'TEMPLATE') return false;
+    if (child.matches('script, style')) return false;
+    return child.nodeType === Node.ELEMENT_NODE;
+  });
+
+  if (direct.length > 1) return direct;
+
+  const nested = direct[0] ? [...direct[0].children].filter((child) => child.tagName !== 'TEMPLATE') : [];
+  return nested.length > 1 ? nested : direct;
 }

@@ -30,14 +30,17 @@ function initScrollParallax() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const configs = [
-    ['.hero-media img', 0.16],
-    ['.date-leaf', -0.12],
-    ['.story-figure', 0.08],
-    ['.story-text', -0.05],
-    ['.gd-figure', 0.08],
-    ['.dress-look', 0.06],
-    ['.rsvp-form', 0.05],
-    ['.detail-band img', 0.14],
+    ['.hero-media img', 0.24],
+    ['.date-leaf', -0.22],
+    ['.date-display', 0.08],
+    ['.count', 0.12],
+    ['.story-figure', 0.16],
+    ['.story-text', -0.11],
+    ['.gd-figure', 0.15],
+    ['.gd-time, .gd-event, .gd-place, .gd-addr', -0.08],
+    ['.dress-look', 0.13],
+    ['.rsvp-form', 0.12],
+    ['.detail-band img', 0.22],
   ];
 
   const items = configs.flatMap(([selector, speed]) =>
@@ -60,7 +63,7 @@ function initScrollParallax() {
 
       const elementCenter = rect.top + rect.height / 2;
       const offset = (viewportCenter - elementCenter) * item.speed;
-      const clamped = Math.max(-38, Math.min(38, offset));
+      const clamped = Math.max(-64, Math.min(64, offset));
       item.el.style.setProperty('--parallax-y', `${clamped.toFixed(1)}px`);
     }
 
