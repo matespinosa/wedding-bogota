@@ -224,16 +224,27 @@ img { display: block; max-width: 100%; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   padding: clamp(2rem, 7vw, 3rem) clamp(1.5rem, 6vw, 2.5rem);
   width: 100%;
   max-width: 460px;
   margin-inline: auto;
   text-align: center;
 }
+
+.cover-main {
+  width: 100%;
+  margin-top: auto;
+  transform: translateY(8%);
+}
+
+.cover-actions {
+  width: 100%;
+  margin-top: auto;
+}
+
 .spread-cover-content .kicker { margin-bottom: 1.2rem; }
 .cover-rsvp-btn {
-  margin-top: clamp(1.45rem, 4vw, 2rem);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -262,7 +273,7 @@ img { display: block; max-width: 100%; }
   background: rgba(243, 241, 232, 0.16);
 }
 .cover-hint {
-  margin-top: 1.25rem;
+  margin-top: 0.85rem;
   font-family: var(--sans);
   font-size: 0.72rem;
   letter-spacing: 0.12em;
@@ -794,11 +805,15 @@ img { display: block; max-width: 100%; }
   }
 
   .spread-cover-content {
-    padding: 1.25rem 1rem;
+    padding: 1.25rem 1rem 1rem;
+  }
+
+  .cover-main {
+    transform: translateY(6%);
   }
 
   .cover-hint {
-    margin-top: 1.4rem;
+    margin-top: 0.75rem;
     font-size: 0.64rem;
     line-height: 1.5;
     max-width: 22rem;
@@ -806,7 +821,6 @@ img { display: block; max-width: 100%; }
   }
 
   .cover-rsvp-btn {
-    margin-top: 1.25rem;
     min-height: 2.65rem;
     padding: 0.75rem 1.15rem;
     font-size: 0.62rem;

@@ -110,6 +110,31 @@ export function initInvitationNav() {
     visiblePages.forEach(revealSpread);
   }
 
+  function refreshBookLayout() {
+    if (!pageFlip) return;
+    pageFlip.update();
+    renderProgress();
+    setCurrent(pageFlip.getCurrentPageIndex());
+  }
+
+  function scheduleLayoutRefresh() {
+    const refreshSoon = () => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(refreshBookLayout);
+      });
+    };
+
+    refreshSoon();
+    window.addEventListener('load', refreshSoon, { once: true });
+    document.fonts?.ready?.then(refreshSoon).catch(() => {});
+
+    viewport.querySelectorAll('img').forEach((image) => {
+      if (image.complete) return;
+      image.addEventListener('load', refreshSoon, { once: true });
+      image.addEventListener('error', refreshSoon, { once: true });
+    });
+  }
+
   function goTo(index) {
     if (!pageFlip || isFlipping || index === current || index < 0 || index >= spreads.length) return;
     isFlipping = true;
@@ -191,6 +216,7 @@ export function initInvitationNav() {
   });
   pageFlip.loadFromHTML(spreads);
   protectInteractiveControls(viewport);
+  scheduleLayoutRefresh();
 }
 
 function protectInteractiveControls(viewport) {
