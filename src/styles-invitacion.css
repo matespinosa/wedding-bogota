@@ -235,7 +235,7 @@ img { display: block; max-width: 100%; }
 .cover-main {
   width: 100%;
   margin-top: auto;
-  transform: translateY(8%);
+  transform: translateY(10%);
 }
 
 .cover-actions {
@@ -248,15 +248,15 @@ img { display: block; max-width: 100%; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2.85rem;
-  padding: 0.85rem 1.45rem;
+  min-height: 2.6rem;
+  padding: 0.78rem 1.25rem;
   border: 1px solid rgba(243, 241, 232, 0.72);
   background: rgba(243, 241, 232, 0.08);
   color: var(--on-dark);
   font-family: var(--sans);
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-weight: 400;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   line-height: 1;
   text-transform: uppercase;
   text-decoration: none;
@@ -273,10 +273,12 @@ img { display: block; max-width: 100%; }
   background: rgba(243, 241, 232, 0.16);
 }
 .cover-hint {
-  margin-top: 0.85rem;
+  margin: 1.15rem auto 0;
+  max-width: 24ch;
   font-family: var(--sans);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  line-height: 1.45;
   text-transform: uppercase;
   color: var(--on-dark-muted);
 }
@@ -813,18 +815,18 @@ img { display: block; max-width: 100%; }
   }
 
   .cover-hint {
-    margin-top: 0.75rem;
-    font-size: 0.64rem;
-    line-height: 1.5;
-    max-width: 22rem;
+    margin-top: 0.9rem;
+    font-size: 0.58rem;
+    line-height: 1.45;
+    max-width: 24ch;
     margin-inline: auto;
   }
 
   .cover-rsvp-btn {
-    min-height: 2.65rem;
-    padding: 0.75rem 1.15rem;
-    font-size: 0.62rem;
-    letter-spacing: 0.14em;
+    min-height: 2.45rem;
+    padding: 0.68rem 1rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
   }
 
   .spread-body {
