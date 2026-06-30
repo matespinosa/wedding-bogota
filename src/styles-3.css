@@ -326,25 +326,12 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   box-shadow: 0 30px 60px -32px rgba(35, 43, 32, 0.5);
 }
 .gd-figure img {
-  /* Acabado vintage: descolorido tipo película, negros levantados y tono cálido */
-  filter: sepia(0.42) saturate(0.7) contrast(0.9) brightness(1.06) hue-rotate(-8deg);
-  transition: transform 1.2s var(--ease), filter 0.8s var(--ease);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s var(--ease);
 }
-.gd-figure::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  /* velo cálido que desvanece los negros (aire de foto antigua) */
-  background:
-    linear-gradient(180deg, rgba(151, 120, 63, 0.16), rgba(146, 150, 138, 0.12)),
-    radial-gradient(125% 120% at 50% 30%, transparent 58%, rgba(60, 64, 47, 0.22) 100%);
-  mix-blend-mode: screen;
-}
-.gran-dia-place:hover .gd-figure img {
-  transform: scale(1.04);
-  filter: sepia(0.34) saturate(0.78) contrast(0.94) brightness(1.04) hue-rotate(-8deg);
-}
+.gran-dia-place:hover .gd-figure img { transform: scale(1.04); }
 .gd-time {
   font-family: var(--sans);
   font-weight: 400;
@@ -674,7 +661,16 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
 
 @media (max-width: 620px) {
+  :root { --mobile-gutter: clamp(1.5rem, 7vw, 1.85rem); }
   body { font-size: 1.1rem; }
+  .wrap { padding-inline: var(--mobile-gutter); }
+  .hero,
+  .date-band,
+  .footer { padding-inline: var(--mobile-gutter); }
+  .nav-inner {
+    padding-left: max(1.15rem, env(safe-area-inset-left));
+    padding-right: max(1.15rem, env(safe-area-inset-right));
+  }
   .nav ul { gap: 1.1rem; }
   .nav a { font-size: 0.62rem; letter-spacing: 0.16em; }
   .count { flex-wrap: wrap; justify-content: center; gap: 0.6rem 1rem; }
