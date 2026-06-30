@@ -119,6 +119,11 @@ export function initInvitationNav() {
     else pageFlip.flip(index, 'bottom');
   }
 
+  function goToSpread(spreadName) {
+    const spreadIndex = spreads.findIndex((spread) => spread.dataset.spread === spreadName);
+    if (spreadIndex >= 0) goTo(spreadIndex);
+  }
+
   function navigateBy(stepDelta) {
     const currentStep = getCurrentStepIndex();
     const targetStep = currentStep + stepDelta;
@@ -130,6 +135,9 @@ export function initInvitationNav() {
     const currentStep = getCurrentStepIndex();
     if (currentStep === navigationSteps.length - 1) goTo(navigationSteps[0]);
     else navigateBy(1);
+  });
+  viewport.querySelectorAll('[data-go-to-spread]').forEach((trigger) => {
+    trigger.addEventListener('click', () => goToSpread(trigger.dataset.goToSpread));
   });
 
   window.addEventListener('keydown', (event) => {
