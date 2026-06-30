@@ -48,13 +48,16 @@ function initSectionMotion() {
       const rect = section.getBoundingClientRect();
       if (rect.bottom < -160 || rect.top > viewportHeight + 160) continue;
 
-      const exitProgress = rect.top < 0
-        ? Math.min(1, Math.abs(rect.top) / Math.max(rect.height * 0.58, 1))
+      // Fade/blur only when the section is close to disappearing, not while it is being read.
+      const exitWindow = Math.min(viewportHeight * 0.34, Math.max(rect.height * 0.28, 180));
+      const exitProgress = rect.bottom < exitWindow
+        ? Math.min(1, (exitWindow - rect.bottom) / exitWindow)
         : 0;
       const direction = Number(section.style.getPropertyValue('--section-direction')) || 1;
-      const opacity = 1 - exitProgress * 0.38;
-      const blur = exitProgress * 7;
-      const x = exitProgress * direction * -28;
+      const easedExit = exitProgress * exitProgress;
+      const opacity = 1 - easedExit * 0.18;
+      const blur = easedExit * 2.4;
+      const x = easedExit * direction * -48;
 
       section.style.setProperty('--section-exit-opacity', opacity.toFixed(3));
       section.style.setProperty('--section-exit-blur', `${blur.toFixed(2)}px`);
