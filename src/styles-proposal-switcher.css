@@ -151,14 +151,20 @@
 @media (max-width: 760px) {
   .proposal-switcher {
     right: max(0.75rem, env(safe-area-inset-right));
-    bottom: calc(var(--proposal-switcher-bottom, 4.75rem) + env(safe-area-inset-bottom));
+    bottom: calc(var(--proposal-switcher-bottom, 0.5rem) + env(safe-area-inset-bottom));
+  }
+
+  .proposal-switcher__fab {
+    width: 3rem;
+    height: 3rem;
+    box-shadow: 0 10px 24px -12px rgba(35, 43, 32, 0.62);
   }
 
   .proposal-switcher__popover {
     position: fixed;
     right: 0.75rem;
     left: 0.75rem;
-    bottom: calc(var(--proposal-switcher-bottom, 4.75rem) + 4.25rem + env(safe-area-inset-bottom));
+    bottom: calc(var(--proposal-switcher-bottom, 0.5rem) + 3.7rem + env(safe-area-inset-bottom));
     width: auto;
     max-height: min(62vh, 28rem);
     overflow-y: auto;
