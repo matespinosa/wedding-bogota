@@ -13,7 +13,7 @@ initReveal();
 initCountdown(WEDDING_DATE);
 loadGuestData(ENDPOINT); // lista + confirmados desde la hoja (en background)
 initRsvp(ENDPOINT);
-initScrollParallax();
+initSectionMotion();
 
 // Navegación: fondo sólido tras hacer scroll fuera del hero.
 const nav = document.getElementById('nav');
@@ -26,45 +26,39 @@ initParticles(document.getElementById('hero-canvas')).catch((err) => {
   console.warn('[hero] WebGPU no disponible, se usa solo la fotografía:', err);
 });
 
-function initScrollParallax() {
+function initSectionMotion() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const configs = [
-    ['.hero-media img', 0.24],
-    ['.date-leaf', -0.22],
-    ['.date-display', 0.08],
-    ['.count', 0.12],
-    ['.story-figure', 0.16],
-    ['.story-text', -0.11],
-    ['.gd-figure', 0.15],
-    ['.gd-time, .gd-event, .gd-place, .gd-addr', -0.08],
-    ['.dress-look', 0.13],
-    ['.rsvp-form', 0.12],
-    ['.detail-band img', 0.22],
+  const sections = [
+    ...document.querySelectorAll('.date-band, .story, .gran-dia, .dress-code, .rsvp, .detail-band, .footer'),
   ];
+  if (!sections.length) return;
 
-  const items = configs.flatMap(([selector, speed]) =>
-    [...document.querySelectorAll(selector)].map((el) => {
-      el.classList.add('parallax-item');
-      return { el, speed };
-    }),
-  );
-
-  if (!items.length) return;
+  sections.forEach((section, index) => {
+    section.classList.add('motion-section');
+    section.style.setProperty('--section-direction', index % 2 === 0 ? '-1' : '1');
+  });
 
   let ticking = false;
 
   const update = () => {
-    const viewportCenter = window.innerHeight / 2;
+    const viewportHeight = window.innerHeight;
 
-    for (const item of items) {
-      const rect = item.el.getBoundingClientRect();
-      if (rect.bottom < -120 || rect.top > window.innerHeight + 120) continue;
+    for (const section of sections) {
+      const rect = section.getBoundingClientRect();
+      if (rect.bottom < -160 || rect.top > viewportHeight + 160) continue;
 
-      const elementCenter = rect.top + rect.height / 2;
-      const offset = (viewportCenter - elementCenter) * item.speed;
-      const clamped = Math.max(-64, Math.min(64, offset));
-      item.el.style.setProperty('--parallax-y', `${clamped.toFixed(1)}px`);
+      const exitProgress = rect.top < 0
+        ? Math.min(1, Math.abs(rect.top) / Math.max(rect.height * 0.58, 1))
+        : 0;
+      const direction = Number(section.style.getPropertyValue('--section-direction')) || 1;
+      const opacity = 1 - exitProgress * 0.38;
+      const blur = exitProgress * 7;
+      const x = exitProgress * direction * -28;
+
+      section.style.setProperty('--section-exit-opacity', opacity.toFixed(3));
+      section.style.setProperty('--section-exit-blur', `${blur.toFixed(2)}px`);
+      section.style.setProperty('--section-exit-x', `${x.toFixed(1)}px`);
     }
 
     ticking = false;
