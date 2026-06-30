@@ -18,6 +18,22 @@
   <link rel="stylesheet" href="/src/styles-proposal-switcher.css" />
 </head>
 <body>
+  <svg class="image-filters" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="remove-white-background" color-interpolation-filters="sRGB">
+        <feColorMatrix
+          in="SourceGraphic"
+          result="white-transparent"
+          type="matrix"
+          values="1 0 0 0 0
+                  0 1 0 0 0
+                  0 0 1 0 0
+                 -0.2126 -0.7152 -0.0722 0 1"
+        />
+        <feComposite in="white-transparent" in2="SourceGraphic" operator="in" />
+      </filter>
+    </defs>
+  </svg>
   <div class="invitation-app" id="invitation-app" aria-live="polite">
     <div class="invitation-viewport" id="invitation-viewport">
 
