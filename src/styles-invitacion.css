@@ -294,7 +294,7 @@ img { display: block; max-width: 100%; }
   min-height: 0;
   width: 100%;
   margin: 0 auto;
-  padding: clamp(1.15rem, 3vw, 1.65rem);
+  padding: 20px;
   overflow: hidden;
 }
 
@@ -490,7 +490,7 @@ img { display: block; max-width: 100%; }
 .spread-body--rsvp {
   width: 100%;
   max-width: 100%;
-  padding: clamp(0.9rem, 2.5vw, 1.35rem);
+  padding: 20px;
   overflow-x: hidden;
 }
 .spread-body--rsvp .serif-title {
@@ -831,12 +831,10 @@ img { display: block; max-width: 100%; }
 
   .spread-body {
     width: 100%;
-    padding-inline: clamp(0.85rem, 4vw, 1.15rem);
-    padding-top: max(0.75rem, env(safe-area-inset-top));
-    padding-bottom: 0.85rem;
+    padding: 20px;
   }
 
-  .spread-body--center { padding-top: max(1.5rem, env(safe-area-inset-top)); }
+  .spread-body--center { padding-top: 20px; }
 
   .spread-body--split {
     display: flex;
@@ -882,7 +880,7 @@ img { display: block; max-width: 100%; }
 
   .spread-body--place {
     justify-content: flex-start;
-    padding-top: max(1rem, env(safe-area-inset-top));
+    padding-top: 20px;
   }
 
   .spread-body--place .serif-title {
@@ -913,7 +911,7 @@ img { display: block; max-width: 100%; }
 
   .spread--dress .spread-body--center {
     justify-content: flex-start;
-    padding-top: max(1rem, env(safe-area-inset-top));
+    padding-top: 20px;
   }
 
   .dress-grid {
@@ -984,7 +982,7 @@ img { display: block; max-width: 100%; }
     min-height: 280px;
   }
 
-  .spread-body { padding-block: 0.75rem; }
+  .spread-body { padding: 20px; }
   .story-figure,
   .place-figure { max-height: 42%; }
   .cover-hint { margin-top: 1rem; }
