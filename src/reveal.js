@@ -72,7 +72,7 @@ function getRevealChildren(item) {
 }
 
 function getRevealDirection(child, index) {
-  if (child.matches('figure, .story-figure, .gd-figure, .dress-look:first-child')) return -48;
-  if (child.matches('form, .story-text, .dress-look:last-child')) return 48;
-  return index % 2 === 0 ? -36 : 36;
+  if (child.matches('figure, .story-figure, .gd-figure, .dress-look:first-child')) return -78;
+  if (child.matches('form, .story-text, .dress-look:last-child')) return 78;
+  return index % 2 === 0 ? -62 : 62;
 }
