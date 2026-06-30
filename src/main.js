@@ -13,6 +13,7 @@ initReveal();
 initCountdown(WEDDING_DATE);
 loadGuestData(ENDPOINT); // lista + confirmados desde la hoja (en background)
 initRsvp(ENDPOINT);
+initScrollParallax();
 
 // Navegación: fondo sólido tras hacer scroll fuera del hero.
 const nav = document.getElementById('nav');
@@ -24,3 +25,55 @@ window.addEventListener('scroll', onScroll, { passive: true });
 initParticles(document.getElementById('hero-canvas')).catch((err) => {
   console.warn('[hero] WebGPU no disponible, se usa solo la fotografía:', err);
 });
+
+function initScrollParallax() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const configs = [
+    ['.hero-media img', 0.16],
+    ['.date-leaf', -0.12],
+    ['.story-figure', 0.08],
+    ['.story-text', -0.05],
+    ['.gd-figure', 0.08],
+    ['.dress-look', 0.06],
+    ['.rsvp-form', 0.05],
+    ['.detail-band img', 0.14],
+  ];
+
+  const items = configs.flatMap(([selector, speed]) =>
+    [...document.querySelectorAll(selector)].map((el) => {
+      el.classList.add('parallax-item');
+      return { el, speed };
+    }),
+  );
+
+  if (!items.length) return;
+
+  let ticking = false;
+
+  const update = () => {
+    const viewportCenter = window.innerHeight / 2;
+
+    for (const item of items) {
+      const rect = item.el.getBoundingClientRect();
+      if (rect.bottom < -120 || rect.top > window.innerHeight + 120) continue;
+
+      const elementCenter = rect.top + rect.height / 2;
+      const offset = (viewportCenter - elementCenter) * item.speed;
+      const clamped = Math.max(-38, Math.min(38, offset));
+      item.el.style.setProperty('--parallax-y', `${clamped.toFixed(1)}px`);
+    }
+
+    ticking = false;
+  };
+
+  const requestUpdate = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  };
+
+  update();
+  window.addEventListener('scroll', requestUpdate, { passive: true });
+  window.addEventListener('resize', requestUpdate);
+}

@@ -9,6 +9,11 @@
 :root {
   --bg: #f1f0ea;
   --bg-2: #eceae1;
+  --bg-date: #e6e0d1;
+  --bg-story: #f7f4ea;
+  --bg-places: #e9e6dc;
+  --bg-rsvp: #f5f1e6;
+  --bg-footer: #e4ded0;
   --ink: #232a22;
   --muted: #5c6157;
   --green: #34402f;
@@ -44,6 +49,12 @@ body {
 }
 
 img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.parallax-item {
+  --parallax-y: 0px;
+  transform: translate3d(0, var(--parallax-y), 0);
+  will-change: transform;
+}
 
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 1.6rem; width: 100%; }
 
@@ -157,7 +168,10 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   overflow: hidden;
 }
 .hero-media { position: absolute; inset: 0; z-index: 0; }
-.hero-media img { filter: saturate(0.92) brightness(0.78); }
+.hero-media img {
+  filter: saturate(0.92) brightness(0.78);
+  transform: translate3d(0, var(--parallax-y, 0px), 0) scale(1.08);
+}
 #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .hero-scrim {
   position: absolute;
@@ -206,6 +220,10 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .date-band {
   text-align: center;
   padding: clamp(5rem, 12vw, 9rem) 1.5rem;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(151, 120, 63, 0.1), transparent 62%),
+    var(--bg-date);
+  border-block: 1px solid rgba(35, 42, 34, 0.08);
 }
 .date-leaf {
   width: 46px;
@@ -260,7 +278,12 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .count-sep { color: var(--brass); opacity: 0.55; font-size: 1.2rem; align-self: center; }
 
 /* ---------- Nuestra historia (editorial offset) ---------- */
-.story { padding: clamp(4rem, 9vw, 7rem) 0 clamp(5rem, 12vw, 9rem); }
+.story {
+  padding: clamp(4rem, 9vw, 7rem) 0 clamp(5rem, 12vw, 9rem);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 34%),
+    var(--bg-story);
+}
 .story-grid {
   display: grid;
   grid-template-columns: 0.82fr 1.18fr;
@@ -299,14 +322,23 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .detail-band--tall { height: 70vh; min-height: 420px; }
 /* Reencuadre: la foto es vertical y el recorte centrado cortaba la cara;
    subimos el punto de enfoque para dar aire sobre las cabezas. */
-.detail-band img { filter: saturate(0.96) brightness(0.94); object-position: center 28%; }
+.detail-band img {
+  filter: saturate(0.96) brightness(0.94);
+  object-position: center 28%;
+  transform: translate3d(0, var(--parallax-y, 0px), 0) scale(1.08);
+}
 .detail-band-scrim {
   position: absolute; inset: 0;
   background: linear-gradient(180deg, rgba(20, 26, 18, 0.16), rgba(20, 26, 18, 0.04));
 }
 
 /* ---------- El gran día — lugares + detalles, con foto por lugar ---------- */
-.gran-dia { padding: clamp(5rem, 12vw, 9rem) 0; }
+.gran-dia {
+  padding: clamp(5rem, 12vw, 9rem) 0;
+  background:
+    radial-gradient(ellipse at 18% 0%, rgba(52, 64, 47, 0.08), transparent 46%),
+    var(--bg-places);
+}
 .gran-dia-head { text-align: center; margin-bottom: clamp(3rem, 7vw, 5rem); }
 .gran-dia-head .kicker { display: block; margin-bottom: 1.1rem; }
 .gran-dia-head .serif-title { margin-bottom: 0.1rem; }
@@ -371,7 +403,9 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 /* ---------- Código de vestir ---------- */
 .dress-code {
   padding: clamp(5rem, 12vw, 9rem) 0;
-  background: var(--bg-2);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(151, 120, 63, 0.09), transparent 58%),
+    var(--bg-2);
   text-align: center;
 }
 .dress-code .wrap { max-width: 720px; }
@@ -428,7 +462,13 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
 
 /* ---------- RSVP ---------- */
-.rsvp { padding: clamp(5rem, 12vw, 9rem) 0; }
+.rsvp {
+  padding: clamp(5rem, 12vw, 9rem) 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.32), transparent 30%),
+    var(--bg-rsvp);
+  border-top: 1px solid rgba(35, 42, 34, 0.08);
+}
 .rsvp .serif-title { margin-bottom: 0.1rem; }
 .rsvp .script-sub { margin-bottom: 1.4rem; }
 .rsvp-note {
@@ -617,7 +657,9 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .footer {
   text-align: center;
   padding: clamp(4rem, 10vw, 7rem) 1.5rem;
-  background: var(--bg-2);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(151, 120, 63, 0.12), transparent 55%),
+    var(--bg-footer);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -639,6 +681,9 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .parallax-item { transform: none !important; }
+  .hero-media img.parallax-item,
+  .detail-band img.parallax-item { transform: none !important; }
   .reveal, .reveal.is-hidden { opacity: 1; transform: none; transition: none; }
   .scroll-cue span { animation: none; }
   .story-figure img,
