@@ -720,7 +720,7 @@ img { display: block; max-width: 100%; }
 /* ---------- Responsive ---------- */
 @media (max-width: 899px) {
   .invitation-viewport {
-    max-width: min(calc(100vw - 1.25rem), 430px) !important;
+    max-width: min(calc(100vw - clamp(2rem, 10vw, 2.7rem)), 430px) !important;
     aspect-ratio: 39 / 62;
   }
 }
@@ -756,7 +756,7 @@ img { display: block; max-width: 100%; }
 
   .spread-body {
     width: 100%;
-    padding-inline: 1rem;
+    padding-inline: clamp(1.1rem, 5vw, 1.35rem);
     padding-top: max(0.85rem, env(safe-area-inset-top));
     padding-bottom: 1rem;
   }
@@ -870,7 +870,7 @@ img { display: block; max-width: 100%; }
 
   .invitation-nav {
     grid-template-columns: auto 1fr auto;
-    padding: 0 max(0.6rem, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(0.6rem, env(safe-area-inset-left));
+    padding: 0 max(0.85rem, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(0.85rem, env(safe-area-inset-left));
   }
   .inv-btn { font-size: 0.58rem; }
   .inv-dot { width: 5px; height: 5px; }
@@ -880,7 +880,7 @@ img { display: block; max-width: 100%; }
   .inv-btn span { display: none; }
 
   .invitation-viewport {
-    max-width: calc(100vw - 0.75rem) !important;
+    max-width: calc(100vw - clamp(2rem, 10vw, 2.7rem)) !important;
     min-height: 300px;
   }
 

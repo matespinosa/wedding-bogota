@@ -644,6 +644,16 @@ p { max-width: 64ch; text-wrap: pretty; }
    RESPONSIVE
    ====================================================== */
 @media (max-width: 760px) {
+  :root { --mobile-gutter: clamp(1.5rem, 7vw, 1.85rem); }
+  .wrap {
+    width: 100%;
+    padding-inline: var(--mobile-gutter);
+  }
+  .nav-inner {
+    width: 100%;
+    padding-inline: var(--mobile-gutter);
+  }
+  .ed-hero { padding-inline: var(--mobile-gutter); }
   .story-grid { grid-template-columns: 1fr; gap: 2.2rem; }
   .story-figure { aspect-ratio: 16 / 11; }
   .story-text { max-width: none; }

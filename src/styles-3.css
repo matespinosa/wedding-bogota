@@ -661,7 +661,16 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
 
 @media (max-width: 620px) {
+  :root { --mobile-gutter: clamp(1.5rem, 7vw, 1.85rem); }
   body { font-size: 1.1rem; }
+  .wrap { padding-inline: var(--mobile-gutter); }
+  .hero,
+  .date-band,
+  .footer { padding-inline: var(--mobile-gutter); }
+  .nav-inner {
+    padding-left: max(1.15rem, env(safe-area-inset-left));
+    padding-right: max(1.15rem, env(safe-area-inset-right));
+  }
   .nav ul { gap: 1.1rem; }
   .nav a { font-size: 0.62rem; letter-spacing: 0.16em; }
   .count { flex-wrap: wrap; justify-content: center; gap: 0.6rem 1rem; }
