@@ -14,13 +14,6 @@ export const PROPOSALS = [
     subtitle: 'Editorial moderno',
     description: 'Estilo revista con tipografía Bodoni',
   },
-  {
-    id: 'invitacion',
-    href: '/invitacion.html',
-    title: 'Invitación interactiva',
-    subtitle: 'Pliego a pliego',
-    description: 'Recorre la invitación como una carta',
-  },
 ];
 
 /**
